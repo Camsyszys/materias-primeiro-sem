@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos de Marketing | Minds Globe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=400;500;700&family=Playfair+Display:ital,wght=0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght=300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* PALETA DE CORES OFICIAL MINDS GLOBE */
+        :root {
+            --bg-papiro: #f7f4ec;
+            --azul-marinho: #162235;
+            --champagne: #bfa175;
+            --branco: #ffffff;
+            --texto: #2b333f;
+            --borda-caixa: #eaddca;
+            --bg-caixa: #fcfaf6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            background-color: var(--bg-papiro);
+            color: var(--texto);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.8;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        /* TEXTURA DE GRÃO DISCRETA */
+        .grain-texture {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* NAVEGAÇÃO SUPERIOR */
+        .nav-superior {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: var(--champagne);
+            letter-spacing: 2px;
+            transition: 0.3s ease;
+        }
+        .btn-back:hover { color: var(--azul-marinho); transform: translateX(-3px); }
+
+        /* CABEÇALHO EDITORIAL ACADÊMICO */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .pre-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--champagne);
+            display: block;
+            margin-bottom: 8px;
+        }
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.4rem;
+            color: var(--azul-marinho);
+            font-weight: 500;
+        }
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #5c6674;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        .header-line {
+            width: 80px;
+            height: 1px;
+            background-color: var(--champagne);
+            margin: 20px auto 0 auto;
+        }
+
+        /* ENVELOPE DO CONTEÚDO */
+        .notebook-cover {
+            background: var(--branco);
+            border: 1px solid var(--borda-caixa);
+            padding: 45px;
+            box-shadow: 0 12px 35px rgba(22, 34, 53, 0.03);
+            border-radius: 2px;
+        }
+
+        /* CONTAINER DA BARRA DE ABAS MELHORADA COM FADE E EFEITO FLUIDO */
+        .tab-menu-wrapper {
+            position: relative;
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--borda-caixa);
+        }
+        
+        /* O efeito de sombra que avisa que há mais itens para rolar */
+        .tab-menu-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0;
+            width: 40px;
+            background: linear-gradient(to right, transparent, var(--branco));
+            pointer-events: none;
+        }
+
+        .tab-menu {
+            display: flex;
+            gap: 8px;
+            padding-bottom: 12px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            /* Esconde a barra de rolagem no Firefox e IE */
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
+        }
+
+        /* Esconde a barra de rolagem no Chrome, Safari e Edge */
+        .tab-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #8fa0b5;
+            cursor: pointer;
+            padding: 10px 16px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .tab-btn:hover {
+            color: var(--azul-marinho);
+            background-color: rgba(191, 161, 117, 0.05);
+        }
+
+        .tab-btn.active {
+            color: var(--azul-marinho);
+            font-weight: 600;
+            background-color: rgba(191, 161, 117, 0.08);
+            box-shadow: inset 0 -2px 0 var(--champagne);
+            border-radius: 4px 4px 0 0;
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ELEMENTOS DE CONTEÚDO */
+        h2.section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--azul-marinho);
+            margin: 35px 0 20px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--borda-caixa);
+        }
+        h2.section-title:first-of-type { margin-top: 0; }
+        
+        h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--champagne);
+            margin: 30px 0 15px 0;
+            letter-spacing: 1px;
+        }
+
+        p { 
+            color: var(--texto);
+            margin-bottom: 18px; 
+            text-align: justify;
+            font-size: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 18px;
+            color: var(--texto);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: var(--azul-marinho);
+            background-color: rgba(191, 161, 117, 0.08);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* BOXES DE INSIGHTS E CONCEITOS */
+        .concept-box {
+            background: var(--bg-caixa);
+            border: 1px solid var(--borda-caixa);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        .concept-box h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--azul-marinho);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .quote-box {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            border-left: 3px solid var(--champagne);
+            padding: 15px 20px;
+            background: var(--bg-caixa);
+            margin: 25px 0;
+            color: #4a5462;
+        }
+
+        /* FLASHCARDS INTERATIVOS (ESTUDO ATIVO) */
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        @media(max-width: 768px) {
+            .exercise-grid { grid-template-columns: 1fr; }
+        }
+        .exercise-card {
+            background: var(--bg-caixa);
+            border: 1px dashed var(--borda-caixa);
+            padding: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+        }
+        .exercise-card:hover { border-style: solid; background: #ffffff; }
+        
+        .card-header {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--champagne);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .reveal-badge {
+            font-size: 0.7rem;
+            background: var(--azul-marinho);
+            color: #ffffff;
+            padding: 2px 6px;
+            letter-spacing: 1px;
+        }
+
+        .solution-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            margin-top: 0;
+            color: var(--texto);
+            font-size: 0.95rem;
+            border-top: 0px solid transparent;
+            padding-top: 0;
+            text-align: justify;
+        }
+        .solution-box.visible {
+            max-height: 800px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--borda-caixa);
+        }
+
+        .img-placeholder {
+            border: 1px dashed var(--champagne);
+            background: var(--bg-caixa);
+            padding: 20px;
+            text-align: center;
+            margin: 25px 0;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #7a828a;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #7a828a;
+            border-top: 1px solid var(--borda-caixa);
+            padding-top: 25px;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grain-texture"></div>
+
+    <div class="container">
+        
+        <div class="nav-superior">
+            <a href="../index.html" class="btn-back">← Voltar à Página Inicial</a>
+        </div>
+
+        <header>
+            <span class="pre-title">Núcleo de Negócios e RI</span>
+            <h1>Fundamentos de Marketing</h1>
+            <div class="subtitle">Evolução Histórica, Engenharia do Valor e Mapeamento de Ambientes Estratégicos</div>
+            <div class="header-line"></div>
+        </header>
+
+        <div class="notebook-cover">
+            
+            <div class="tab-menu-wrapper">
+                <div class="tab-menu" id="mainTabMenu">
+                    <button class="tab-btn active" onclick="switchTab(event, 'evolucao')">1. Evolução do Pensamento</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'valor')">2. Criação de Valor & Ética</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'macro')">3. Macroambiente</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'micro')">4. Microambiente</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'segmentacao')">5. Segmentação & Alvo</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'concorrencia')">6. Análise de Concorrência</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'posicionamento')">7. Posicionamento de Marca</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'mixtatico')">8. Mix Tático (4 P's)</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'produto')">9. Decisões de Produto</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'comunicacao')">10. Mix de Comunicação</button>
+                </div>
+            </div>
+
+            <div id="evolucao" class="tab-content active">
+                <h2 class="section-title">As Grandes Abordagens e Metamorfoses do Marketing</h2>
+                <p>O pensamento em Marketing não é estático; ele se transforma à medida que o ambiente econômico, as sociedades e as teorias de mercado evoluem. Sob a lente das <span class="highlight">Relações Internacionais</span>, compreender as estruturas de consumo significa interpretar dinâmicas globais de poder e trocas sistêmicas organizadas em quatro grandes eras teóricas.</p>
+                
+                <div class="quote-box">
+                    "O ambiente se transforma. As pessoas se transformam. A teoria se transforma. O que é marketing?" <br>
+                    <strong>— Referência Base: Saren, M. (2023). Marketing Graffiti. p. 01 - 09.</strong>
+                </div>
+
+                <h3>Abordagens Históricas & Consecutivas</h3>
+                <p>Clique nos cards teóricos abaixo para explorar e fixar as distinctions fundamentais exigidas nas avaliações acadêmicas:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Décadas de 1950 e 1960</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>1. Abordagem Funcionalista</strong>
+                        <div class="solution-box">
+                            Esta abordagem surge diante da "ruptura" do contato direto e de uma distância cada vez maior entre produtores e consumidores no ecossistema industrial pós-guerra, impulsionando a proliferação de intermediários. O modelo enxerga o marketing fundamentalmente como um <strong>sistema complexo de distribuição</strong> e dedica-se a estudar formas e ferramentas para fazer este sistema funcionar de maneira mais eficiente. É a resposta teórica para resolver os problemas de escoamento e logística dos fabricantes.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Décadas de 1960 e 1970</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>2. Abordagem Gerencial</strong>
+                        <div class="solution-box">
+                            Esta vertente propõe-se a estudar empresas e consumidores individuais detalhadamente para descobrir mecanismos pragmáticos de <strong>controlar e prever seu comportamento de mercado</strong>. O objetivo central é claro: maximizar o lucro por parte da empresa e a satisfação por parte do consumidor. Baseia-se em uma visão fortemente comportamentalista do cliente: a premissa de condicionamento dita que <span class="highlight">podemos manipular e moldar esse comportamento</span> através de estímulos planejados. Sob essa lógica, a empresa é o fim e o consumidor torna-se o meio — uma visão que extrapola a esfera meramente comercial.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Início dos Anos 1990</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>3. Abordagem Relacional</strong>
+                        <div class="solution-box">
+                            Aparece como uma crítica severa ao modelo gerencial, acusando-o de um excesso de orientação ao produto e foco exacerbado no curto prazo transacional. Esta vertente determina que <strong>tanto o vendedor quanto o comprador são agentes activos e conscientes</strong> dentro da relação comercial. A tarefa primordial do marketing deixa de ser a manipulação de variáveis e passa a ser a administração qualificada de relacionamentos de longo prazo com os clientes e stakeholders, ao invés do foco exclusivo em um "mix interno" tático.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Anos 2000 em Diante</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>4. Abordagem Colaborativa</strong>
+                        <div class="solution-box">
+                            Inspirada e fundamentada na cultura empresarial do Extremo Oriente e da Ásia. Propõe uma quebra de paradigma: os vendedores e compradores não atuam unicamente competindo entre si pelo melhor negócio ou preço, mas passam a colaborar mutuamente com alta frequência. O alicerce desse modelo baseia-se no conceito de <strong>GUANXI</strong>, que preconiza redes integradas de contatos, colaboração mútua e confiança profunda de longo prazo. Aqui, vendedores colaboram estrategicamente com vendedores e compradores com compradores.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="img-placeholder">
+                    [Espaço reservado para o Gráfico de Paradigmas de Marketing - Slide Aula 2]
+                </div>
+            </div>
+
+            <div id="valor" class="tab-content">
+                <h2 class="section-title">A Engenharia do Valor e suas Fronteiras Éticas</h2>
+                <p>O conceito de valor é o epicentro das discussões de mercado corporativo contemporâneo. A entrega e a formulação de valor ditam o sucesso das transações e o posicionamento das marcas em escala nacional e global.</p>
+
+                <div class="concept-box">
+                    <h4>✦ Proposta de Valor</h4>
+                    <p>Definida conceitualmente na literatura contemporânea como: <strong>“Uma promessa implícita para entregar uma combinação particular de valores”</strong> de forma previsível, coerente e satisfatória para o mercado-alvo.<br>
+                    <em>— Referência: Kotler, P.; Keller, K. L.; Chernev, A. Administração de Marketing. 16. ed. 2024, pag. 21-26.</em></p>
+                </div>
+
+                <h3>Diferença Estrutural Dinâmica: Cadeia vs. Constelação</h3>
+                <p>A evolução dos mercados transformou a linearidade da produção em redes complexas de valor. Entenda o confronto de modelos:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" style="cursor: default;">
+                        <div class="card-header"><span>Modelo Linear Clássico</span></div>
+                        <strong>Cadeia de Valor Tradicional</strong>
+                        <p style="font-size: 0.95rem; margin-top: 10px;">Determina que as corporações criam margem financeira adicional de forma estritamente sequencial. O valor é adicionado à medida que os bens tangíveis ou serviços são processados, movidos e trocados ao longo dos elos físicos de uma cadeia de suprimentos predefinida.</p>
+                    </div>
+
+                    <div class="exercise-card" style="cursor: default;">
+                        <div class="card-header"><span>Modelo Reticular Moderno</span></div>
+                        <strong>Constelação de Valor</strong>
+                        <p style="font-size: 0.95rem; margin-top: 10px;">Rompe com o fluxo unidirecional. O valor passa a ser <strong>cocriado organicamente por meio de uma integração profunda entre a empresa e o cliente</strong>. O consumidor final deixa de ser um receptor passivo e assume o papel de um agente ativo, gerando valor em conjunto com a marca.</p>
+                    </div>
+                </div>
+
+                <h2 class="section-title">As Tensões Críticas e os Dilemas da Ética</h2>
+                <p>O avanço das metodologias gerenciais traz à tona debates cruciais sobre os limites morais das ações comerciais e a autonomia individual.</p>
+
+                <div class="quote-box">
+                    "Um ponto de fricção perene na teoria crítica do marketing diz respeito à real liberdade de escolha por parte do consumidor. O cliente é de fato um rei ou sua soberania é mitigada por assimetrias de informação e técnicas avançadas de condicionamento mercadológico?"<br>
+                    <strong>— Discussão profunda baseada nas provocações de Saren (2018). Marketing Graffiti. P. 34 – 52.</strong>
+                </div>
+
+                <p>Essas questões éticas ganham relevância vital no cenário internacional ao analisar a <span class="highlight">liberdade de escolha da empresa</span> (definição ética de territórios, responsabilidade e mercados de atuação externos) em contraponto com a vulnerabilidade dos públicos-alvo expostos a estratégias de manipulação de comportamento que extrapolam o escopo comercial clássico.</p>
+            </div>
+
+            <div id="macro" class="tab-content">
+                <h2 class="section-title">O Ecossistema Externo Geral</h2>
+                <p>O <span class="highlight">Macroambiente</span> compreende a totalidade das forças externas amplas e estruturais nas quais as corporações e as nações operam. Ele exerce impacto sobre todas as organizações, em maior ou menor grau, podendo criar oportunidades de expansão ou severas ameaças à estabilidade dos negócios.</p>
+                
+                <div class="concept-box">
+                    <h4>✦ O Desafio da Variável Incontrolável</h4>
+                    <p>Para os analistas de RI e estrategistas de mercado, o ponto mais crítico e desafiador do macroambiente reside no fato de que <strong>as empresas possuem pouca ou nenhuma influência direta</strong> sobre o que acontece nele. Trata-se de um cenário moldado por dinâmicas externas imutáveis pelas firmas isoladamente.</p>
+                </div>
+
+                <h3>As Forças Macroambientais (Exploração Detalhada)</h3>
+                <p>Clique nos cards para acessar os conceitos teóricos exatos e as definições acadêmicas literais trazidas nos slides:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Variável Econômica</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>1. Condições Macroeconômicas Gerais</strong>
+                        <div class="solution-box">
+                            Contempla as condições econômicas gerais da nação, região, estado e local da área em que a empresa atua. Se há uma verdade absoluta sobre qualquer economia, é que ela irá inevitavelmente mudar. Portanto, as condições econômicas atuais e as expectativas futuras (taxas de inflação, juros, oscilações cambiais e flutuações no poder de compra) exercem um impacto profundo e transformador sobre o desenho de qualquer estratégia de marketing global.<br>
+                            <em>— Referência Literal: Ferrell & Hartline (2016) / Hooley et al. (2011).</em>
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Variável Tecnológica</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>2. Processos, Métodos e Inovações</strong>
+                        <div class="solution-box">
+                            É comum as pessoas limitarem o ambiente tecnológico à imaginação de novos produtos de altíssima tecnologia (como smartphones, banda larga, inteligência artificial ou sistemas avançados de GPS). No entanto, o conceito científico de tecnologia refere-se, na sua essência, ao <strong>modo de se realizarem tarefas específicas ou aos processos e métodos mutáveis</strong> que utilizamos para criar as soluções e ferramentas consideradas novas. Redefine inteiramente a produtividade setorial.<br>
+                            <em>— Referência Literal: Ferrell & Hartline (2016).</em>
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Variável Sociocultural</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>3. Cultura, Crenças e Demografia</strong>
+                        <div class="solution-box">
+                            A vertente <strong>Cultural</strong> compreende a soma total do conhecimento, opiniões, ideias, artes, leis, costumes, tradições, crenças, valores e hábitos compartilhados por uma sociedade. Ligado de forma indissociável, o fator <strong>Demográfico</strong> indica as características estatísticas das populações humanas e de seus segmentos (como recortes por idade e cortes geracionais específicos, gênero, raça, tamanho de famílias e renda domiciliar), sendo a principal ferramenta estatística utilizada para identificar e dimensionar mercados de consumidores.<br>
+                            <em>— Referência Literal: Grewal (2016).</em>
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Variável Natural</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>4. Recursos Naturais e Clima (Environment)</strong>
+                        <div class="solution-box">
+                            Esta força contempla diretamente a disponibilidade e regulação dos recursos naturais (matérias-primas essenciais) e como eles são afetados ou afetam o ambiente de mercado. Inclui o monitoramento de mudanças climáticas globais, catástrofes naturais recorrentes e a forte ascensão de conceitos ligados à sustentabilidade, à preservação ecológica e ao uso consciente de insumos. Examina desde o impacto imediato do verão/inverno nas vendas até o peso ético da gestão sustentável na reputação corporativa.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="img-placeholder">
+                    [Espaço reservado para o Diagrama de Interconexões do Macroambiente - Hooley et al. (2011)]
+                </div>
+            </div>
+
+            <div id="micro" class="tab-content">
+                <h2 class="section-title">O Ambiente Setorial Próximo</h2>
+                <p>Ao contrário do macroambiente, o <span class="highlight">Microambiente</span> constitui o ecossistema imediato e setorial da organização. É formado por atores e forças operacionais que orbitam diretamente ao redor da empresa, impactando em tempo real sua capacidade operacional de atender e se relacionar com seus mercados consumidores.</p>
+
+                <div class="concept-box">
+                    <h4>✦ A Metodologia dos 5 C's do Microambiente</h4>
+                    <p>A literatura clássica sintetiza a análise situacional interna através do mapeamento de cinco pilares de interação mercadológica contínua:</p>
+                    <ul>
+                        <li><strong>Clientes:</strong> O público-alvo, suas necessidades específicas, comportamento de compra e as demandas de valor.</li>
+                        <li><strong>Contexto:</strong> A ponte de conexão com as forças externas, institucionais, ambientais e legais.</li>
+                        <li><strong>Companhia:</strong> A análise interna das capacidades, limitações, recursos logísticos e cultura da própria empresa.</li>
+                        <li><strong>Colaboradores:</strong> Os parceiros estratégicos que ajudam a executar o modelo de negócio (como agências e distribuidores).</li>
+                        <li><strong>Concorrentes:</strong> Os rivais de mercado disputando a atenção e preferência do mesmo público.</li>
+                    </ul>
+                    <p style="font-size: 0.85rem; margin-top: 10px; font-style: italic;">— Fonte Oficial: Kotler, P. et al. Administração de Marketing. 16. ed. 2024. pg. 41 – 46.</p>
+                </div>
+
+                <h3>Arquitetura Estrutural do Microambiente</h3>
+                <p>Clique nos blocos operacionais para entender os fluxos de força e a rede de canais que determinam a dinâmica setorial:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Atores Estratégicos</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>Clientes & Concorrentes</strong>
+                        <div class="solution-box">
+                            Os <strong>Clientes</strong> balizam o foco do negócio, enquanto os <strong>Concorrentes</strong> disputam ativamente o Market Share (fatia de mercado). A interação constante entre esses dois atores exige que a firma monitore e refine continuamente sua Estratégia de Mercado (composta por três etapas interdependentes: <span class="highlight">Segmentação, Público-Alvo e Posicionamento</span>) antes de colocar qualquer tática operacional em campo.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Rede Otimizada de Suprimentos</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>Fornecedores, Canais & Stakeholders</strong>
+                        <div class="solution-box">
+                            Os <strong>Fornecedores</strong> controlam o fluxo, os custos e a qualidade dos insumos e matérias-primas básicas. Os <strong>Canais de Distribuição</strong> representam os intermediários e caminhos logísticos fundamentais para fazer o produto chegar ao consumidor. O equilíbrio de forças nesse segmento depende da gestão de <strong>Incentivos</strong> adequados, garantindo que toda a cadeia trabalhe em sintonia com os objetivos de marca da companhia e atenda aos Stakeholders.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    "O mapeamento minucioso do Microambiente é o alicerce que dá sustentação para a tomada de decisão operacional. Ele liga diretamente as diretrizes abstratas da Estratégia Corporativa com a execução prática do Mix de Marketing Tático (Produto, Serviços, Marca, Preço, Comunicação e Distribuição)."
+                </div>
+            </div>
+
+            <div id="segmentacao" class="tab-content">
+                <h2 class="section-title">Dividir para Conquistar: A Segmentação de Mercado</h2>
+                <p>O mercado consumidor é heterogêneo por natureza. Diante da impossibilidade operacional e financeira de atender a todos os indivíduos com o mesmo nível de excelência, as corporações recorrem à <span class="highlight">Segmentação</span>, agrupando consumidores que compartilham necessidades, desejos e comportamentos homogêneos de consumo.</p>
+                
+                <h3>As Quatro Grandes Bases de Segmentação</h3>
+                <p>Clique nos cards para aprofundar nas variáveis demográficas, geográficas, psicográficas e comportamentais de forma integral:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Bases Físicas e Mensuráveis</span>
+                            <div class="reveal-badge">VER CRITÉRIOS</div>
+                        </div>
+                        <strong>Geográfica & Demográfica</strong>
+                        <div class="solution-box">
+                            • <strong>Geográfica:</strong> Divide o mercado com base em critérios espaciais e físicos (regiões geográficas, tamanho de cidades, densidade de municípios, clima e relevo local).<br><br>
+                            • <strong>Demográfica:</strong> Utiliza dados estatísticos consolidados para identificar perfis rígidos de mercado, focando em variáveis como: Idade (incluindo cortes geracionais específicos), Gênero, Etnia e Raça, Nível de Renda Familiar, Escolaridade/Nível de Instrução e o Ciclo de Vida Familiar.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Bases Psicológicas e Comportamentais</span>
+                            <div class="reveal-badge">VER CRITÉRIOS</div>
+                        </div>
+                        <strong>Psicográfica & Atitudinal/Comportamental</strong>
+                        <div class="solution-box">
+                            • <strong>Psicográfica:</strong> Investiga o íntimo e o estilo do consumidor, agrupando-o por Estilo de Vida (atividades, interesses e opiniões compartilhadas) e Traços de Personalidade dominantes.<br><br>
+                            • <strong>Comportamental ou Atitudinal:</strong> Foca na interação direta e empírica do cliente com o produto ou marca, mapeando: Ocasiões de compra (rotina ou emergência), Benefícios específicos mais buscados na solução, Status de usuário, Taxa de uso do bem e o Grau de Fidelidade demonstrado à marca.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>✦ Requisitos Prévios para uma Segmentação Efetiva</h4>
+                    <p>Para que um segmento de mercado de fato sirva de base para investimentos e ações operacionais, ele precisa cumprir rigorosamente quatro critérios teóricos essenciais:</p>
+                    <ol>
+                        <li><strong>Mensurável:</strong> O tamanho, o poder de compra e as características gerais do segmento devem ser possíveis de mensuração estatística e cálculo quantitativo.</li>
+                        <li><strong>Substancial:</strong> O grupo de consumidores mapeado deve ser grande ou rentável o suficiente para justificar a criação de um plano mercadológico exclusivo.</li>
+                        <li><strong>Acionável:</strong> A companhia deve possuir capacidade operacional interna e programas eficazes para atrair, atender e servir aquele segmento mapeado de forma viável.</li>
+                        <li><strong>Diferenciável:</strong> Os consumidores do segmento devem responder de forma conceitualmente distinta e isolada a diferentes elementos e estímulos do mix de marketing quando comparados a outros grupos.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="concorrencia" class="tab-content">
+                <h2 class="section-title">Inteligência Competitiva e Posicionamento Relativo</h2>
+                <p>Nenhum plano de marketing prospera olhando apenas para as forças internas da própria companhia. O mercado é uma arena de disputas dinâmicas, o que exige das organizações uma compreensão precisa de seu <span class="highlight">Posicionamento Relativo</span> — isto é, o lugar exato que a marca ocupa na mente do consumidor quando comparada diretamente aos seus rivais.</p>
+
+                <h3>Os Quatro Níveis Analíticos de Concorrência</h3>
+                <p>Para ilustrar a gradação competitiva, os slides utilizam o clássico exemplo setorial do <strong>Cinema</strong>. Clique nos cartões interativos para memorizar cada esfera de rivalidade:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Nível 1: Rivalidade Direta de Marca</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>Concorrentes de Marca</strong>
+                        <div class="solution-box">
+                            Configura-se quando outras empresas oferecem produtos e serviços essencialmente semelhantes, com características e preços parecidos, direcionados exatamente para os mesmos clientes-alvo. Há uma disputa direta de Market Share.<br><br>
+                            <em>- Exemplo do Slide:</em> O confronto mercadológico direto entre a rede <strong>Cinemark</strong> e a rede <strong>Kinoplex</strong>.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Nível 2: Rivalidade de Categoria</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>Concorrentes de Produto / Categoria</strong>
+                        <div class="solution-box">
+                            Ocorre quando companhias operam dentro da mesma classe geral de produtos ou serviços, porém entregam soluções com formatos, tecnologias ou características físicas marcadamente diferentes para satisfazer o desejo do público.<br><br>
+                            <em>- Exemplo do Slide:</em> A disputa por entretenimento audiovisual entre o <strong>Cinema Tradicional</strong> e as plataformas de streaming de vídeo como a <strong>Netflix</strong>.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Nível 3: Rivalidade Abstrata / Necessidade</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>Concorrentes Genéricos</strong>
+                        <div class="solution-box">
+                            Abrange empresas que fornecem produtos ou serviços completamente diferentes do ponto de vista físico e tecnológico, mas que resolvem rigorosamente a mesma necessidade humana básica subjacente do consumidor.<br><br>
+                            <em>- Exemplo do Slide:</em> A busca por lazer e entretenimento em um dia de folga disputada entre ir ao <strong>Cinema</strong> ou realizar um passeio ao ar livre em um <strong>Parque Público</strong>.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Nível 4: Disputa pelo Recurso Financeiro</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>Concorrentes de Orçamento</strong>
+                        <div class="solution-box">
+                            Representa o nível mais amplo e complexo de competição. Engloba absolutamente qualquer bem, serviço ou compromisso financeiro que dispute o dinheiro limitado contido no orçamento do consumidor final, forçando-o a fazer escolhas de alocação de renda.<br><br>
+                            <em>- Exemplo do Slide:</em> A escolha do indivíduo entre gastar seus recursos disponíveis ingressando no <strong>Cinema</strong> ou poupar o montante para <strong>Pagar uma dívida financeira</strong> pendente.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>✦ A Ferramenta Analítica do Mapa Perceptual</h4>
+                    <p>O <strong>Mapa Perceptual</strong> é uma ferramenta visual indispensável para o planejamento estratégico. Ele plota as marcas concorrentes ao longo de eixos que representam os atributos mais valorizados pelo público consumidor (por exemplo: Preço vs. Qualidade, ou Inovação vs. Tradição). Sua função primordial é responder cientificamente a duas perguntas vitais: <em>"Como os clientes enxergam de fato o nosso posicionamento no mercado?"</em> e <em>"Quais marcas rivais dividem o mesmo espaço de percepção psicológica conosco?"</em>.</p>
+                </div>
+            </div>
+
+            <div id="posicionamento" class="tab-content">
+                <h2 class="section-title">Posicionamento Estratégico: O Lugar na Mente</h2>
+                <p>O <span class="highlight">Posicionamento</span> não é o que você faz com o produto físico, mas sim <span class="highlight">o que você projeta na mente do cliente em potencial</span>. Trata-se do ato de desenhar a oferta e a imagem da empresa para que ela ocupe um lugar diferenciado e valioso na mente do mercado-alvo, sustentando uma vantagem competitiva de longo prazo.</p>
+
+                <div class="quote-box">
+                    "Posicionamento é a batalha pela sua mente. É a razão pela qual o consumidor escolhe você e não o concorrente direto." <br>
+                    <strong>— Referência Base: Ries, A.; Trout, J. (2000) / Ferrel & Hartline (2016) cap 7 / Hooley et al. (2011) p. 149-151.</strong>
+                </div>
+
+                <h3>Mecanisms de Posicionamento (Explorando Profundamente)</h3>
+                <p>Explore as diretrizes estruturais de diferenciação, pontos de paridade e pontos de diferença exigidos nas análises de marca:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Sustentação da Marca</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>Pontos de Diferença (PODs) vs. Pontos de Paridade (POPs)</strong>
+                        <div class="solution-box">
+                            Para se posicionar, a marca precisa equilibrar duas forças essenciais no mercado:<br><br>
+                            • <strong>Pontos de Diferença (PODs - Points of Difference):</strong> Atributos ou benefícios que os consumidores associam fortemente a uma marca, avaliam positivamente e acreditam piamente que não poderiam encontrar em uma marca concorrente na mesma proporção ou com a mesma qualidade. É o seu diferencial competitivo real e exclusivo.<br><br>
+                            • <strong>Pontos de Paridade (POPs - Points of Parity):</strong> Associações de atributos que não são exclusivas da marca, mas que são vistas como essenciais, obrigatórias e legítimas dentro de uma categoria de produto para que a empresa seja considerada uma escolha válida pelo consumidor. Servem para "anular" a vantagem competitiva do concorrente.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Estratégia de Fixação</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>O Mantra da Marca (Brand Mantra)</strong>
+                        <div class="solution-box">
+                            É uma articulação curta, cirúrgica, de **três a cinco palavras**, sobre a essência pura ou o "coração e alma" da marca. Sua função principal é puramente interna: guiar os colaboradores e garantir que todas as decisões táticas e comunicações externas estejam perfeitamente alinhadas com o posicionamento.<br><br>
+                            <em>Exemplos Clássicos de Mercado:</em><br>
+                            - <strong>Nike:</strong> "Authentic Athletic Performance" (Desempenho Atlético Autêntico).<br>
+                            - <strong>Disney:</strong> "Fun Family Entertainment" (Entretenimento Familiar Divertido).
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Erros de Execução</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>Os Perigos de um Posicionamento Equivocado</strong>
+                        <div class="solution-box">
+                            A falha ao desenhar a estratégia mental da marca pode levar a quatro armadilhas perigosas no mercado:<br><br>
+                            1. <strong>Subposicionamento:</strong> O mercado tempo uma ideia vaga ou não consegue identificar nada de especial sobre a marca; ela vira "só mais uma" na prateleira.<br><br>
+                            2. <strong>Superposicionamento:</strong> Os clientes criam uma imagem muito estreita, limitada ou elitizada da marca (ex: achar que a marca só faz produtos caríssimos, ignorando linhas acessíveis).<br><br>
+                            3. <strong>Posicionamento Confuso:</strong> A empresa muda de imagem com tanta frequência ou usa mensagens tão contraditórias que o mercado fica sem saber o que a marca realmente representa.<br><br>
+                            4. <strong>Posicionamento Duvidoso:</strong> Os consumidores simplesmente não acreditam nas promessas de valor da marca devido ao histórico do produto, preço ou reputação pregressa da empresa.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Estrutura Textual</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>A Declaração de Posicionamento Oficial</strong>
+                        <div class="solution-box">
+                            Para formalizar a estratégia de marca no plano de negócios, a gerência utiliza uma fórmula estrutural padronizada que norteia toda a comunicação corporativa:<br><br>
+                            <em>"Para <strong>[mercado-alvo]</strong>, a marca <strong>[X]</strong> é a única que entrega <strong>[ponto de diferenciação exclusivo - POD]</strong> dentro da categoria de <strong>[quadro de referência/categoria]</strong> porque <strong>[razão factual para acreditar / razão causal]</strong>."</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="img-placeholder">
+                    [Espaço reservado para o Gráfico de Mapeamento Perceptual de Posicionamento - Slide Aula 10]
+                </div>
+            </div>
+
+            <div id="mixtatico" class="tab-content">
+                <h2 class="section-title">O Mix de Marketing: Execução Tática</h2>
+                <p>Depois de mapear o macro e o microambiente, segmentar o mercado, escolher o público-alvo e definir o posicionamento estratégico, a empresa precisa agir no mundo físico. É aqui que entra o <span class="highlight">Mix de Marketing Tático (Os 4 P's)</span>: o conjunto de ferramentas controláveis que a firma combina para produzir a resposta desejada no mercado consumidor.</p>
+
+                <div class="concept-box">
+                    <h4>✦ A Transição do Modelo de Ferramentas Táticas</h4>
+                    <p>Tradicionalmente focado em bens tangíveis através dos <strong>4 P's clássicos (Produto, Preço, Praça e Promoção)</strong>, o Mix Tático evoluiu e expandiu-se na literatura contemporânea de Kotler & Keller (2024) para englobar uma visão holística integrada em quatro novas forças pilares corporativas: <strong>Pessoas, Processos, Programas e Performance</strong>, além da transição conceitual para os <strong>7 T's das táticas de mercado modernas</strong>.</p>
+                </div>
+
+                <h3>As Variáveis Controláveis do Produto e do Serviço</h3>
+                <p>Clique nos cards para destrinchar os componentes operacionais que tangibilizam a proposta de valor no mercado de bens e serviços:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>A Dimensão do Bem</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>1. Variável Produto (Composto de Produto)</strong>
+                        <div class="solution-box">
+                            Não se limita ao objeto físico palpável. O produto é qualquer solução entregue ao mercado para atenção, aquisição, uso ou consumo, capaz de satisfazer plenamente um desejo ou necessidade. Seus componentes táticos exigem decisões gerenciais profundas sobre:<br><br>
+                            • **Variedade e Mix:** A amplitude, consistência e o equilíbrio das linhas de produtos oferecidas.<br>
+                            • **Design, Qualidade e Características:** O desempenho técnico e o apelo estético funcional do bem.<br>
+                            • **Nome da Marca (Branding):** A construção da identidade de marca que diferencia e chancela a oferta.<br>
+                            • **Embalagem e Tamanhos:** A proteção física contra avarias, a cubagem logística e o apelo visual de gôndola.<br>
+                            • **Garantias e Serviços:** A segurança pós-venda contratual que mitiga o risco percebido pelo comprador.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>A Dimensão Intangível</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>2. A Natureza Especial dos Serviços</strong>
+                        <div class="solution-box">
+                            Serviços são atividades, benefícios ou satisfações oferecidos ao mercado que são essencialmente intangíveis e não resultam na propriedade de absolutamente nada. Devido à sua natureza abstrata, possuem quatro características críticas que exigem táticas específicas de gerenciamento:<br><br>
+                            • <strong>Intangibilidade:</strong> Não podem ser vistos, provados, sentidos ou ouvidos antes da compra. Exige que a gerência "tangibilize o intangível" através de evidências materiais, instalações e o ambiente físico.<br><br>
+                            • <strong>Inseparabilidade:</strong> São produtos e consumidos simultaneamente. O prestador do serviço e o cliente interagem diretamente em tempo real, tornando o fator humano parte indissociável do produto.<br><br>
+                            • <strong>Variabilidade (Heterogeneidade):</strong> A qualidade depende estritamente de quem os presta, quando, onde e como são prestados. Torna a padronização operacional um desafio constante.<br><br>
+                            • <strong>Perecorridade:</strong> Não podem de forma alguma ser armazenados, estocados ou guardados para venda ou uso futuro. Cria problemas complexos de gestão de capacidade e picos de demanda (ex: assentos vazios em voos de companhias aéreas ou quartos de hotel vazios).
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Arquitetura do Produto</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>3. Os Três Níveis de Produto (Kotler)</strong>
+                        <div class="solution-box">
+                            Para desenhar uma oferta competitiva, o estrategista deve desmembrar o produto em três camadas concêntricas estruturais:<br><br>
+                            1. <strong>Benefício Núcleo (Produto Central):</strong> Responde à pergunta fundamental: "O que o consumidor está comprando de verdade?". É o benefício essencial que resolve o problema básico subjacente do cliente. *(Ex: Em um smartphone, o núcleo é a comunicação instantânea e conectividade global).*<br><br>
+                            2. <strong>Produto Real:</strong> É a materialização e transformação prática do benefício núcleo em algo concreto. Envolve o nível de qualidade técnica, as características de design, o nome da marca, as funcionalidades específicas e a embalagem física.<br><br>
+                            3. <strong>Produto Ampliado:</strong> Engloba os serviços adicionais e os benefícios agregados que cercam o produto real para superar as expectativas do cliente e se diferenciar da concorrência tradicional. *(Ex: Entrega rápida em domicílio, suporte técnico especializado 24h, garantia estendida de fábrica e financiamento facilitado).*
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Decisões de Portfólio</span>
+                            <div class="reveal-badge">VER DETALHES</div>
+                        </div>
+                        <strong>4. Mix de Produtos: Dimensões de Linha</strong>
+                        <div class="solution-box">
+                            O portfólio completo de produtos de uma corporação é analisado e gerenciado por meio de quatro dimensões de linha cruciais:<br><br>
+                            • <strong>Abrangência (Largura):</strong> Refere-se a quantas linhas diferentes de produtos a empresa comercializa no mercado.<br><br>
+                            • <strong>Extensão (Comprimento):</strong> É o número total de itens e produtos individuais que a empresa possui dentro de todas as suas linhas de produtos combinadas.<br><br>
+                            • <strong>Profundidade:</strong> Refere-se a quantas variantes, opções e SKUs (como tamanhos, cores, sabores ou formulações químicas) cada produto específico da linha possui.<br><br>
+                            • <strong>Consistência:</strong> Indica o grau de parentesco e proximidade entre as diversas linhas de produtos quanto ao seu uso final, canais de distribuição logística compartilhados ou exigências produtivas de fábrica.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="img-placeholder">
+                    [Espaço reservado para o Diagrama dos Três Níveis de Produto - Kotler & Keller]
+                </div>
+            </div>
+
+            <div id="produto" class="tab-content">
+                <h2 class="section-title">Decisões de Produto: Diferenciação, Design e Ciclo de Vida</h2>
+                <p>O produto é a primeira e mais crítica tangibilização da promessa de valor de uma organização. No ambiente competitivo contemporâneo, a gestão de portfólio exige decisões profundas sobre como tornar uma oferta única e como geri-la ao longo do tempo.</p>
+
+                <div class="quote-box">
+                    "Muitos gestores acreditam que a diferenciação reside apenas no produto físico, mas ela estende-se a todas as esferas da experiência de consumo, moldando a perceção de valor." <br>
+                    <strong>— Referência Bibliográfica Base: Kotler et al. (2024). Administração de Marketing, pp. 205-218 e pp. 481-488.</strong>
+                </div>
+
+                <h3>Fronteiras da Diferenciação e Atributos de Produto</h3>
+                <p>Clique nos cards clicáveis para explorar os vetores analíticos exatos que as empresas utilizam para distanciar as suas ofertas dos concorrentes:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Vantagem Física e Técnica</span>
+                            <div class="reveal-badge">VER ATRIBUTOS</div>
+                        </div>
+                        <strong>Atributos Estruturais de Diferenciação</strong>
+                        <div class="solution-box">
+                            A diferenciação técnica de um produto físico apoia-se em nove dimensões críticas determinadas pela literatura corporativa:<br><br>
+                            • <strong>Funcionalidade Central:</strong> O nível de desempenho básico e as capacidades primárias da solução.<br>
+                            • <strong>Recursos:</strong> Características adicionais que complementam a função básica do produto (os extras).<br>
+                            • <strong>Qualidade de Desempenho:</strong> O nível em que as características primárias do produto operam de forma excelente.<br>
+                            • <strong>Qualidade de Conformidade:</strong> O grau em que todas as unidades produzidas são idênticas e cumprem rigorosamente as especificações prometidas.<br>
+                            • <strong>Durabilidade:</strong> A medida da vida operacional esperada do produto em condições normais ou extremas.<br>
+                            • <strong>Confiabilidade:</strong> A probabilidade de o produto não falhar ou apresentar avarias dentro de um período específico.<br>
+                            • <strong>Forma:</strong> O tamanho, formato ou estrutura física propriamente dita do produto.<br>
+                            • <strong>Estilo:</strong> O visual e o impacto estético e emocional que o produto transmite ao cliente.<br>
+                            • <strong>Customização:</strong> A capacidade de adaptar o produto e a oferta às necessidades cirúrgicas de clientes individuais.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>A Dinâmica do Tempo</span>
+                            <div class="reveal-badge">VER CONCEITO</div>
+                        </div>
+                        <strong>Análise Estratégica do Ciclo de Vida do Produto (CVP)</strong>
+                        <div class="solution-box">
+                            Afirmar que um produto possui um Ciclo de Vida significa aceitar quatro premissas fundamentais de mercado:<br><br>
+                            1. Os produtos têm vida limitada.<br>
+                            2. As vendas passam por estágios distinções, cada um trazendo desafios, oportunidades e problemas únicos para a gerência.<br>
+                            3. Os lucros sobem e descem nos diferentes estágios da vida do produto.<br>
+                            4. Os produtos exigem estratégias de marketing, financeiras, de produção, de compras e de recursos humanos marcadamente diferentes em cada fase.<br><br>
+                            <em>Estágios Tradicionais:</em> **Introdução** (crescimento lento, lucro inexistente devido aos altos investimentos), **Crescimento** (aceitação rápida de mercado e melhoria substancial dos lucros), **Maturidade** (desaceleração do crescimento pelo esbofeteamento de concorrentes) e **Declínio** (queda firme nas vendas e erosão das margens).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="img-placeholder">
+                    [Espaço reservado para o Gráfico da Curva do Ciclo de Vida do Produto (Vendas vs. Lucros) - Slide Aula 12]
+                </div>
+            </div>
+
+            <div id="comunicacao" class="tab-content">
+                <h2 class="section-title">Comunicação Integrada de Marketing (CIM)</h2>
+                <p>A <span class="highlight">Comunicação de Marketing</span> representa a voz da empresa e das suas marcas. É através deste composto tático que a organização estabelece um diálogo com o mercado, constrói relações de confiança e ativa o posicionamento estratégico planeado.</p>
+
+                <div class="concept-box">
+                    <h4>✦ Conceito Central de Comunicação de Marketing</h4>
+                    <p>Definida academicamente como: <strong>"O meio pelo qual as empresas buscam informar, persuadir e lembrar os consumidores, direta ou indiretamente, sobre os produtos e as marcas que comercializam."</strong><br>
+                    Ela funciona como o tecido conectivo que traduz o valor invisível da firma em percepções psicológicas nítidas na mente do público.<br>
+                    <em>— Referência: Kotler et al. (2024). Administração de Marketing, cap. 12 e 13.</em></p>
+                </div>
+
+                <h3>Desenvolvimento de um Programa de Comunicação Eficaz</h3>
+                <p>Clique nos cards teóricos para memorizar as etapas sequenciais exigidas pela engenharia gerencial para estruturar campanhas de mercado de alta performance:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>Arquitetura do Programa</span>
+                            <div class="reveal-badge">VER PASSOS</div>
+                        </div>
+                        <strong>As Etapas de Planeamento da Comunicação</strong>
+                        <div class="solution-box">
+                            Para construir uma comunicação integrada sem desperdício de orçamento, a gerência executa uma sequência rigorosa de decisões estruturais:<br><br>
+                            1. <strong>Identificar o Público-Alvo:</strong> Determinar com clareza cirúrgica quem receberá a mensagem (compradores potenciais, utilizadores atuais, decisores ou influenciadores).<br><br>
+                            2. <strong>Definir os Objetivos de Comunicação:</strong> Estabelecer a meta mental (criar **necessidade da categoria**, gerar **consciência da marca**, moldar **atitude frente à marca** ou estimular a **intenção de compra**).<br><br>
+                            3. <strong>Elaborar a Mensagem (Conteúdo e Estrutura):</strong> Resolver o que dizer (estratégia de mensagem), como dizer (estratégia criativa) e quem deve dizer (fonte da mensagem).<br><br>
+                            4. <strong>Selecionar os Canais de Comunicação:</strong> Escolher os meios ideais, divididos entre **Canais Pessoais** (contacto direto, boca a boca, venda pessoal) e **Canais Não Pessoais** (meios de massa, eventos, atmosfera e media digital).
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header">
+                            <span>O Composto de Comunicação</span>
+                            <div class="reveal-badge">VER FERRAMENTAS</div>
+                        </div>
+                        <strong>O Mix de Promoção (Ferramentas de Execução)</strong>
+                        <div class="solution-box">
+                            Para atingir os objetivos planeados, as marcas combinam um arsenal de ferramentas integradas:<br><br>
+                            • <strong>Publicidade:</strong> Qualquer forma paga de apresentação não pessoal de ideias, bens ou serviços por um patrocinador identificado.<br>
+                            • <strong>Promoção de Vendas:</strong> Incentivos de curto prazo para encorajar a experimentação ou a compra imediata de um produto/serviço.<br>
+                            • <strong>Relações Públicas (PR) e Publicidade Gratuita:</strong> Programas desenhados para promover ou proteger a imagem da empresa ou das suas ofertas individuais.<br>
+                            • <strong>Eventos e Experiências:</strong> Atividades patrocinadas para criar interações diárias ou especiais de marca com os consumidores.<br>
+                            • <strong>Marketing Direto e Digital:</strong> Uso de e-mail, redes sociais e ferramentas online para comunicar diretamente com clientes específicos e obter uma resposta imediata.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="img-placeholder">
+                    [Espaço reservado para o Diagrama do Processo de Elementos de Comunicação Integrada - Kotler & Keller]
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        REPOSITÓRIO ACADÊMICO PESSOAL &bull; MINDS GLOBE &bull; NÚCLEO DE RELAÇÕES INTERNACIONAIS &bull; 2026
+    </footer>
+
+    <script>
+        // Transição suave entre as Abas de Estudo com foco automático na aba ativa
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            const selectedBtn = event.currentTarget;
+            selectedBtn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+
+            // Centraliza o botão clicado automaticamente na tela para melhorar o deslizamento
+            selectedBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
+        // Mecanismo de Estudo Ativo
+        function toggleSolution(cardElement) {
+            const solutionBox = cardElement.querySelector('.solution-box');
+            solutionBox.classList.toggle('visible');
+            
+            const badge = cardElement.querySelector('.reveal-badge');
+            if(solutionBox.classList.contains('visible')) {
+                badge.innerText = "FECHAR DETALHES";
+                badge.style.background = "#bfa175";
+            } else {
+                badge.innerText = "VER DETALHES";
+                badge.style.background = "#162235";
+            }
+        }
+    </script>
+</body>
+</html>

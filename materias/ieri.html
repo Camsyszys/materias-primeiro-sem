@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introdução às RI | Minds Globe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* PALETA DE CORES OFICIAL MINDS GLOBE */
+        :root {
+            --bg-papiro: #f7f4ec;
+            --azul-marinho: #162235;
+            --champagne: #bfa175;
+            --branco: #ffffff;
+            --texto: #2b333f;
+            --borda-caixa: #eaddca;
+            --bg-caixa: #fcfaf6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            background-color: var(--bg-papiro); 
+            color: var(--texto);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        /* TEXTURA DE GRÃO DISCRETA (Identidade das Páginas) */
+        .grain-texture {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* BOTÃO VOLTAR */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: var(--champagne);
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            transition: 0.3s ease;
+        }
+        .btn-back:hover { transform: translateX(-5px); color: var(--azul-marinho); }
+
+        /* CABEÇALHO EDITORIAL */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .pre-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--champagne);
+            display: block;
+            margin-bottom: 8px;
+        }
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.6rem;
+            color: var(--azul-marinho);
+            font-weight: 500;
+        }
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #5c6674;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        .header-line {
+            width: 80px;
+            height: 1px;
+            background-color: var(--champagne);
+            margin: 20px auto 0 auto;
+        }
+
+        /* MOLDURA DO CADERNO / CONTEÚDO */
+        .notebook-cover {
+            background: var(--branco);
+            border: 1px solid var(--borda-caixa);
+            padding: 45px;
+            box-shadow: 0 12px 35px rgba(22, 34, 53, 0.03);
+            position: relative;
+            border-radius: 2px;
+        }
+
+        /* NAVEGAÇÃO POR ABAS INTERATIVAS */
+        .tab-menu {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--borda-caixa);
+            margin-bottom: 35px;
+            padding-bottom: 10px;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: #8fa0b5;
+            cursor: pointer;
+            padding: 8px 16px;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            color: var(--azul-marinho);
+            font-weight: 600;
+            border-bottom: 2px solid var(--champagne);
+        }
+
+        /* CONTEÚDO DAS ABAS */
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ESTILIZAÇÃO DO TEXTO CONECTADO */
+        h2.section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--azul-marinho);
+            margin: 30px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed var(--borda-caixa);
+        }
+        h2.section-title:first-of-type { margin-top: 0; }
+        
+        h3 { 
+            font-family: 'Cinzel', serif; 
+            color: var(--champagne); 
+            margin: 25px 0 10px 0; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+        }
+        
+        p { 
+            color: var(--texto); 
+            margin-bottom: 16px; 
+            text-align: justify;
+            font-size: 0.98rem;
+        }
+        
+        .highlight { 
+            font-weight: 600; 
+            color: var(--azul-marinho); 
+            background-color: rgba(191, 161, 117, 0.08);
+            padding: 0 4px;
+        }
+
+        /* CAIXAS DE CITAÇÃO E DESTACADAS */
+        .quote-box {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            border-left: 3px solid var(--champagne);
+            padding: 15px 20px;
+            background: var(--bg-caixa);
+            margin: 20px 0;
+            color: #4a5462;
+        }
+        .quote-box strong { font-family: 'Plus Jakarta Sans', sans-serif; font-style: normal; font-size: 0.85rem; color: var(--azul-marinho); }
+
+        .concept-box {
+            background: var(--bg-caixa);
+            border: 1px solid var(--borda-caixa);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        /* TABELAS ACADÊMICAS */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        .data-table th { 
+            background: var(--azul-marinho); 
+            color: var(--branco); 
+            font-family: 'Cinzel', serif; 
+            padding: 10px 14px; 
+            font-size: 0.75rem; 
+            text-align: left; 
+            letter-spacing: 1px;
+        }
+        .data-table td { 
+            border-bottom: 1px solid var(--borda-caixa); 
+            padding: 12px 14px; 
+            color: var(--texto);
+        }
+        .data-table tr:nth-child(even) { background-color: rgba(247, 244, 236, 0.3); }
+
+        /* ARRANJO DE FOTOS / GRÁFICOS (PLACEHOLDERS SOLICITADOS) */
+        .image-placeholder {
+            border: 1px dashed var(--champagne);
+            background: var(--bg-caixa);
+            padding: 30px;
+            text-align: center;
+            margin: 25px 0;
+            color: var(--champagne);
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            border-radius: 4px;
+        }
+        .image-placeholder span {
+            display: block;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-style: italic;
+            color: #8fa0b5;
+            margin-top: 5px;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        /* FLASHCARDS INTERATIVOS (CLIQUE PARA REVELAR) */
+        .exercise-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
+            margin: 25px 0; 
+        }
+        .exercise-card {
+            background: var(--bg-caixa);
+            border: 1px solid var(--borda-caixa);
+            padding: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+        .exercise-card:hover { border-color: var(--champagne); transform: translateY(-2px); }
+        .reveal-badge {
+            font-size: 0.6rem;
+            background: var(--azul-marinho);
+            color: var(--branco);
+            padding: 3px 6px;
+            position: absolute;
+            top: 15px; right: 15px;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+        .exercise-card h4 { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--azul-marinho); margin-bottom: 8px; max-width: 70%; }
+        .solution-box {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--champagne);
+            display: none;
+            font-size: 0.9rem;
+            color: var(--texto);
+        }
+        .solution-box.visible { display: block; }
+
+        /* LINHA DO TEMPO RECAPITULATIVA */
+        .timeline-container {
+            margin-top: 40px;
+            border-top: 2px solid var(--azul-marinho);
+            padding-top: 30px;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        .year-marker {
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            color: var(--champagne);
+            min-width: 110px;
+            font-size: 1.1rem;
+            border-right: 1px solid var(--champagne);
+            padding-right: 10px;
+            height: fit-content;
+        }
+
+        /* RODAPÉ ACCENT */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: #8fa0b5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grain-texture"></div>
+
+    <div class="container">
+        
+        <nav role="navigation">
+            <a href="../index.html" class="btn-back">
+                &larr; VOLTAR PARA O PORTAL
+            </a>
+        </nav>
+
+        <header>
+            <span class="pre-title">EVOLUÇÃO DO SISTEMA INTERNACIONAL</span>
+            <h1>Introdução aos Estudos de RI</h1>
+            <div class="subtitle">A transição das dinâmicas globais da Pax Americana à fragmentação estrutural</div>
+            <div class="header-line"></div>
+        </header>
+
+        <div class="notebook-cover">
+            
+            <nav class="tab-menu" aria-label="Navegação cronológica">
+                <button class="tab-btn active" onclick="switchTab(event, 'anos90')">ANOS 1990</button>
+                <button class="tab-btn" onclick="switchTab(event, 'anos2000')">ANOS 2000</button>
+                <button class="tab-btn" onclick="switchTab(event, 'anos2010')">ANOS 2010</button>
+                <button class="tab-btn" onclick="switchTab(event, 'hoje')">O SISTEMA HOJE (2020-2026)</button>
+            </nav>
+
+            <section id="anos90" class="tab-content active">
+                <h2 class="section-title">O Fim Inesperado da Bipolaridade e o Triunfo Liberal</h2>
+                <p>A dissolução da União Soviética em 25 de dezembro de 1991 encerrou abruptamente o arranjo ideológico e militar da Guerra Fria. Longe de ser um evento longamente planejado, o colapso do bloco socialista <span class="highlight">pegou os formuladores de política externa e acadêmicos totalmente desprevenidos</span>, abrindo uma urgência sistêmica: como reorganizar o tabuleiro geopolítico mundial a partir de uma única superpotência remanescente?</p>
+                
+                <div class="quote-box">
+                    "Temos diante de nós a oportunidade de forjar para nós mesmos e para as futuras gerações uma Nova Ordem Mundial... Um mundo onde o império da lei, e não a lei da selva, governa a conduta das nações."
+                    <br><strong>— Presidente George H. Bush, articulando o conceito de NWO (New World Order).</strong>
+                </div>
+
+                <p>A resposta imediata da coalizão vitoriosa foi a consolidação da <span class="highlight">Ordem Internacional Liberal</span>. Este modelo buscou amarrar o comportamento dos Estados a uma rede densa de instituições multilaterais, baseando-se em três pilares integrados para evitar novos conflitos de soma zero:</p>
+                
+                <div class="concept-box">
+                    <p><strong>• Pilar Econômico:</strong> Centralizado nas diretrizes do Consenso de Washington, promovendo a globalização, abertura de mercados e desregulamentação financeira via FMI e Banco Mundial. Em 1994, a Rodada Uruguai do GATT foi concluída, transformando-o na <span class="highlight">Organização Mundial do Comércio (OMC)</span>.</p>
+                    <p><strong>• Pilar Político-Militar:</strong> Sustentado pelo Conselho de Segurança da ONU e pela centralidade da OTAN, focando no controle de armamentos (AIEA/TNP) e na universalização de tratados como a Convenção de Genebra.</p>
+                    <p><strong>• Pilar Social:</strong> Focado na proteção dos Direitos Humanos individuais, liberdade de imprensa e na expansão do papel de ONGs transnacionais na governança global.</p>
+                </div>
+
+                <div class="image-placeholder">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/President_Bush_meets_with_world_leaders_at_the_Economic_Summit_in_Houston%2C_Texas_-_NARA_-_186413.jpg/250px-President_Bush_meets_with_world_leaders_at_the_Economic_Summit_in_Houston%2C_Texas_-_NARA_-_186413.jpg" alt="Ilustração da institucionalização e multilateralismo econômico dos anos 1990">
+                    <span>Espaço reservado para ilustrar a institucionalização e o multilateralismo econômico da época.</span>
+                </div>
+
+                <h3>A Disputa Oculta de Modelos de Capitalismo</h3>
+                <p>Embora o capitalismo parecesse o único vencedor, a década de 1990 abrigou uma competição interna silenciosa entre três vertentes: o <span class="highlight">Modelo Americano (Neoliberal)</span>, baseado no livre mercado puro e desregulamentado; o <span class="highlight">Modelo Japonês</span>, centrado na forte cooperação entre Estado e megacorporações (Keiretsus); e o <span class="highlight">Modelo Alemão (Capitalismo de Renânia)</span>, pautado pelo bem-estar social e forte papel dos sindicatos. O padrão americano prevaleceu porque, enquanto o Japão entrava em sua "década perdida" de estagnação e a Alemanha lidava com os custos colossais da reunificação, os EUA experimentavam o boom tecnológico da internet.</p>
+
+                <h3>O Debate Teórico da Polaridade</h3>
+                <p>A consolidação da chamada <em>Pax Americana</em> fez com que a Secretária de Estado Madeleine Albright cunhasse a expressão dos EUA como o <span class="highlight">"País Indispensável"</span> — a ideia de que, sem o poder moderador e militar americano, o sistema internacional desmoronaria. Na academia, três grandes leituras tentavam decifrar o futuro:</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <span class="reveal-badge">VER DETALHES</span>
+                        <h4>Francis Fukuyama (1989)</h4>
+                        <div class="solution-box">
+                            <strong>O Fim da História:</strong> Argumentava que o fim da Guerra Fria representava o ápice da evolução ideológica humana, com o triunfo definitivo da democracia liberal e da economia de mercado sobre as alternativas autoritárias.
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <span class="reveal-badge">VER DETALHES</span>
+                        <h4>Samuel Huntington</h4>
+                        <div class="solution-box">
+                            <strong>O Choque de Civilizações:</strong> Contestava Fukuyama, propondo que as linhas de fratura do mundo pós-Guerra Fria não seriam ideológicas ou econômicas, mas culturais. Os grandes conflitos ocorreriam nos pontos de encontro entre civilizações (como Ocidental, Islâmica e Sinítica).
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <span class="reveal-badge">VER DETALHES</span>
+                        <h4>Paul Kennedy (1989)</h4>
+                        <div class="solution-box">
+                            <strong>Ascensão e Queda das Grandes Potências:</strong> Alertava que os EUA caminhavam para o fenômeno da "hiperestensão imperial". O custo financeiro para manter bases e intervenções militares pelo globo sufocaria a economia doméstica no longo prazo, levando ao declínio relativo.
+                        </div>
+                    </div>
+                </div>
+
+                <h3>As Contradições da Pax Americana</h3>
+                <p>Apesar da retórica do direito internacional, os EUA e a OTAN realizaram diversas intervenções militares à margem ou sem a autorização explícita do Conselho de Segurança da ONU (como os bombardeios na Sérvia/Kosovo em 1999 e ataques cirúrgicos no Iraque). Essas ações foram toleradas porque o Ocidente as apoiava, e potências como a <span class="highlight">Rússia (fragilizada e dependente de empréstimos do FMI)</span> e a <span class="highlight">China (focada em sua transição econômica e no pleito para ingressar na OMC)</span> não possuíam capacidade política ou financeira para confrontar os americanos. Paralelamente, a liberalização financeira acelerada gerou severas crises de balança de pagamentos em mercados em desenvolvimento (México 1995, Tigres Asiáticos 1997, Rússia 1998, Brasil 1999 e Argentina 2000), demonstrando que a globalização desregulamentada carregava instabilidades profundas. Como resposta defensiva, esses países iniciaram uma política agressiva de acúmulo de reservas cambiais em dólares para se protegerem de futuras fugas de capital especulativo.</p>
+            </section>
+
+            <section id="anos2000" class="tab-content">
+                <h2 class="section-title">A Guerra ao Terror e a Mudança nos Fluxos Econômicos</h2>
+                <p>A virada do milênio foi profundamente impactada pelos atentados de 11 de setembro de 2001. A resposta do governo George W. Bush alterou as prioridades globais, substituindo o foco na liberalização comercial e cooperação institucional pela lógica estratégico-militar da <span class="highlight">Guerra ao Terror</span>. Os gastos de defesa norte-americanos dispararam para financiar as invasões do Afeganistão e, posteriormente, do Iraque em 2003.</p>
+                
+                <h3>O Unilateralismo e a Crise de Legitimidade (2003)</h3>
+                <p>A decisão de invadir o Iraque em 2003 sem o aval do Conselho de Segurança da ONU abriu a primeira grande rachadura política dentro do próprio Ocidente. Diferente das intervenções dos anos 90, potências tradicionais europeias como França e Alemanha uniram-se à Rússia e à China na condenação veemente da ação americana. Esse evento marcou o <span class="highlight">início do desgaste da legitimidade da liderança dos EUA</span>, que passaram a ser percebidos como um ator unilateral, quebrando as próprias regras que ajudaram a criar.</p>
+
+                <div class="image-placeholder">
+                    [IMAGEM 2: GRÁFICO DO BOOM DAS COMMODITIES (2001-2008)]
+                    <img src="data:image/jpeg;base64,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" alt="">
+                    <span>Espaço para o gráfico demonstrando a arrancada de preços do petróleo, soja e minério de ferro após a entrada da China na OMC.</span>
+                </div>
+
+                <h3>A Ascensão do Resto e o Boom das Commodities</h3>
+                <p>Enquanto os EUA se desgastavam militarmente no Oriente Médio, a economia global passava por uma transformação tectônica gerada pela <span class="highlight">entrada oficial da China na OMC em dezembro de 2001</span>. A rápida industrialização e urbanização chinesa dispararam a demanda mundial por matérias-primas, gerando o "Boom das Commodities". Este fenômeno transferiu volumes massivos de riqueza para países exportadores do Sul Global, garantindo-lhes fôlego financeiro e autonomia política.</p>
+                <p>Nesse cenário, o analista Fareed Zakaria cunhou o termo "A Ascensão do Resto", apontando para o declínio relativo do poder americano. Diante da ordem liberal ocidental, Zakaria identificou que as potências emergentes tinham três opções:</p>
+                
+                <div class="concept-box">
+                    <p><strong>I) Integrar-se totalmente:</strong> Aceitar passivamente as regras e o centro financeiro ocidental.</p>
+                    <p><strong>II) Rejeitar o sistema:</strong> Isolar-se ou adotar uma postura de confronto direto.</p>
+                    <p><strong>III) Integrar-se nos seus próprios termos (A Terceira Via):</strong> Participar do comércio global, mas forjar laços independentes, <span class="highlight">evitando o "centro" ocidental</span> e blindando suas soberanias. Foi essa última estratégia que pavimentou o caminho para a transformação do termo econômico BRIC (criado por Jim O'Neill em 2001 na Goldman Sachs para sugerir destinos de investimento) em um bloco político real, formalizado na primeira cúpula de chefes de Estado em Ecaterimburgo, na Rússia, em junho de 2009.</p>
+                </div>
+
+                <h3>O Ponto de Inflexão: A Crise Financeira de 2008</h3>
+                <p>O colapso do mercado de hipotecas <em>subprime</em> nos EUA em 2008 não foi apenas uma recessão econômica; foi uma profunda crise de credibilidade do modelo de capitalismo de mercado anglo-saxão. A quebra expôs os perigos da desregulação financeira e inverteu a hierarquia de poder econômico: os países desenvolvidos, outrora proponentes das receitas de austeridade, viram-se quebrados e obrigados a recorrer às reservas acumuladas pelos países emergentes para recapitalizar o FMI e evitar o colapso sistêmico. O enfraquecimento do G-7 forçou a elevação do <span class="highlight">G-20 à categoria de principal fórum de coordenação econômica global</span>, simbolizando que o Ocidente já não conseguia governar o mundo sozinho.</p>
+            </section>
+
+            <section id="anos2010" class="tab-content">
+                <h2 class="section-title">O Mundo G-Zero e a Era da Ansiedade</h2>
+                <p>O período pós-crise de 2008 foi caracterizado pelo diagnóstico de Gideon Rachman em sua obra <em>"Zero-Sum Future"</em>. Rachman dividiu o pós-Guerra Fria em três momentos: a Era da Transformação (1978-1991), a Era do Otimismo (1991-2008) e, finalmente, a <span class="highlight">Era da Ansiedade (pós-2008)</span>. Nesta nova fase, o otimismo com a globalização desmoronou, dando lugar à percepção de que a cooperação internacional havia se tornado um jogo de soma zero (onde o ganho de um país representa necessariamente a perda de outro).</p>
+                
+                <h3>Os Quatro Impasses Globais Semicrônicos</h3>
+                <p>A governança global entrou em paralisia devido à erosão da confiança mútua entre as grandes potências, inviabilizando soluções para quatro problemas estruturais que demandavam ação coordenada:</p>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Área de Impasse</th>
+                                <th>Dinâmica do Conflito Institucional</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>I) Sistema Financeiro</strong></td>
+                                <td>Profunda divergência sobre os novos mecanismos de regulação bancária global e a resistência ocidental em ceder cotas de poder de voto para os emergentes no FMI.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>II) Sistema Comercial</strong></td>
+                                <td>O colapso definitivo e a paralisia da <span class="highlight">Rodada Doha da OMC</span>, motivados pelo impasse entre o protecionismo agrícola das nações ricas e as barreiras industriais exigidas pelos emergentes.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>III) Segurança Internacional</strong></td>
+                                <td>Impossibilidade de consenso no Conselho de Segurança da ONU para gerenciar crises agudas, como o programa nuclear do Irã e as guerras civis decorrentes do desdobramento da Primavera Árabe.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IV) Clima / Meio Ambiente</strong></td>
+                                <td>O atrito constante sobre as metas de descarbonização e financiamento de transição energética, dividindo responsabilidades históricas do Ocidente e o direito ao desenvolvimento de China e Índia.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>O Conceito de Mundo G-Zero</h3>
+                <p>Foi nesse vácuo geopolítico que os analistas Ian Bremmer e Nouriel Roubini formularam o conceito de <span class="highlight">Mundo G-Zero</span>. O termo descreve um cenário onde nem a antiga superpotência (EUA), nem os blocos tradicionais (G-7), e tampouco as novas coalizões (BRICS ou G-20) possuem a coesão interna ou a capacidade de ditar e sustentar as regras do jogo internacional. O resultado prático é a instabilidade crônica: os problemas são conhecidos, mas a ausência de um garantidor ou de liderança legítima impede qualquer reforma estrutural nas instituições.</p>
+
+                <div class="image-placeholder">
+                    [IMAGEM 3: O RACHA NO G7 DE 2018 / TRUMP REJEITANDO O ACORDO CONJUNTO]
+                    <img src="https://veja.abril.com.br/wp-content/uploads/2018/06/2018-06-09t204527z_1593752740_rc18cee41b30_rtrmadp_3_g7-summit-canada-copy.jpg?quality=70&strip=info&w=414&h=280&crop=1" alt="Ilustração da ruptura do bloco ocidental na cúpula do Canadá">
+                    <span>Espaço para foto icônica de Angela Merkel e outros líderes em volta de Donald Trump na cúpula do Canadá, simbolizando a ruptura do bloco ocidental.</span>
+                </div>
+
+                <h3>Tentativas de Reajuste: De Obama a Trump</h3>
+                <p>As respostas domésticas dos EUA a essa decadência evidenciaram a polarização do país. O governo de <span class="highlight">Barack Obama (2009-2017)</span> tentou uma abordagem pragmática e menos custosa, desenhando a estratégia do <span class="highlight">"Pivô para a Ásia"</span> (reconhecendo a China como o competidor central do século) e priorizando canais diplomáticos (como o Acordo Nuclear com o Irã e o Acordo de Paris). Contudo, sua gestão foi arranhada externamente pelos vazamentos do escândalo Snowden e pelo recuo estratégico na Síria após fixar uma "linha vermelha" contra o uso de armas químicas, o que foi interpretado por Moscou e Pequim como fraqueza. Aproveitando-se dessa brecha, a Rússia realizou a <span class="highlight">anexação da Crimeia em 2014</span>, demonstrando na prática os limites das sanções econômicas ocidentais.</p>
+                <p>A frustração com esse cenário pavimentou a eleição de <span class="highlight">Donald Trump (Trump 1.0: 2017-2021)</span>, cuja plataforma "America First" atacou frontalmente as bases da Ordem Liberal. Trump retirou os EUA do Acordo de Paris e do tratado do Irã, sabotou o funcionamento da OMC ao bloquear a nomeação de juízes para o Órgão de Apelação e iniciou uma agressiva <span class="highlight">guerra comercial unilateral contra a China</span>, estilhaçando a coesão transatlântica tradicional com os aliados europeus.</p>
+            </section>
+
+            <section id="hoje" class="tab-content">
+                <h2 class="section-title">A Ruptura Definitiva e a Nova "Lei da Selva" (2020-2026)</h2>
+                <p>Os anos 2020 consolidaram a transição do impasse do G-Zero para uma realidade muito mais agressiva. O ponto de inflexão geopolítico ocorreu em 4 de fevereiro de 2022, quando Xi Jinping e Vladimir Putin assinaram em Pequim a <span class="highlight">Declaração Conjunta sobre a Nova Era</span>, formalizando uma aliança estratégica "sem limites" e demandando abertamente uma ordem multipolar alternativa que rompesse com a hegemonia de regras ocidentais. Vinte dias depois, em 24 de fevereiro, a Rússia iniciou a invasão em larga escala da Ucrânia, sepultando de vez o princípio de estabilidade territorial na Europa e as esperanças de um multilateralismo funcional.</p>
+                
+                <h3>O Choque de Trump 2.0 (2025) e a Inflexão Estratégica dos EUA</h3>
+                <p>A posse do segundo mandato de Donald Trump desencadeou uma sequência vertiginosa de abalos estruturais nas relações transatlânticas. O governo americano abandonou de forma explícita a função de "Garantidor Universal" da Ordem Liberal para operar sob uma lógica estritamente transacional. A publicação da <span class="highlight">National Security Strategy (NSS) de 2025</span> consolidou essa guinada por meio de três diretrizes duras:</p>
+                
+                <div class="concept-box">
+                    <p><strong>• Doutrina Monroe Revisitada:</strong> Reorientação radical das prioridades de segurança para o Hemisfério Ocidental, transformando a militarização de fronteiras, o controle estrito de fluxos migratórios e o combate direto aos cartéis de drogas na prioridade número um de Washington.</p>
+                    <p><strong>• Alianças Transacionais e Custos de Defesa:</strong> Fim do guarda-chuva de segurança gratuito. Exigência explícita de que aliados europeus e o Japão assumam integralmente os custos financeiros de sua própria defesa, esvaziando as garantias automáticas do Artigo 5º da OTAN.</p>
+                    <p><strong>• Gabinete da Submissão e Alinhamento:</strong> Substituição de burocratas tradicionais por figuras de lealdade irrestrita na máquina de segurança externa — uma mudança ilustrada na metáfora interna de que os novos assessores usavam <span class="highlight">"sapatos maiores"</span> para implementar as diretrizes presidenciais sem impor resistências ou freios institucionais.</p>
+                </div>
+
+                <h3>A Cronologia dos Choques Transatlânticos</h3>
+                <p>Essa nova postura gerou uma sequência de atritos diplomáticos documentados ao longo do primeiro semestre de 2025, evidenciando o isolamento da Europa e a fragmentação do Ocidente:</p>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Data Exata</th>
+                                <th style="width: 25%;">Evento Chave</th>
+                                <th>Impacto Sistêmico nas Relações Internacionais</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>14 de Fevereiro de 2025</strong></td>
+                                <td>Discurso de JD Vance na MSC</td>
+                                <td>Na Conferência de Segurança de Munique, o vice-presidente americano chocou os líderes europeus ao afirmar que a Ásia era o único teatro estratégico relevante e que a estabilidade da Europa não era problema dos EUA.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>18 de Fevereiro de 2025</strong></td>
+                                <td>Reunião Rubio-Lavrov</td>
+                                <td>O Secretário de Estado norte-americano reuniu-se diretamente com o chanceler russo à revelia das capitais europeias, sinalizando a busca por um arranjo bilateral sobre zonas de influência.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>28 de Fevereiro de 2025</strong></td>
+                                <td>Atrito Trump-Zelensky</td>
+                                <td>Ruptura pública de canais e duras cobranças financeiras americanas sobre o governo ucraniano, resultando no congelamento de pacotes de assistência militar de Washington.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>02 de Março de 2025</strong></td>
+                                <td><em>Coalition of the Willing</em></td>
+                                <td>A criação de uma coalizão restrita e voluntária de segurança focada unicamente na contenção econômica e de cadeias produtivas da China, atropelando os canais tradicionais da OTAN.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>05 de Junho de 2025</strong></td>
+                                <td>Pronunciamento de Hegseth</td>
+                                <td>O Secretário de Defesa norte-americano fez duras críticas em Bruxelas contra a burocracia civil da OTAN, reforçando que os EUA não financiariam "vulnerabilidades alheias".</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="image-placeholder">
+                    [IMAGEM 4: MARK CARNEY PALESTRANDO EM DAVOS - JANEIRO DE 2026]
+                    <img src="data:image/jpeg;base64,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" alt="Foto do economista Mark Carney discursando em Davos">
+                    <span>Espaço reservado para a foto do economista Mark Carney discursando sobre a RUPTURA do sistema em Davos.</span>
+                </div>
+
+                <h3>O Diagnóstico de Mark Carney (Davos, 2026): A Lei da Selva</h3>
+                <p>Em 20 de janeiro de 2026, durante o Fórum Econômico Mundial em Davos, o renomado economista Mark Carney ofereceu o diagnóstico definitivo do colapso sistêmico. Carney declarou que a ordem baseada em regras <span class="highlight">não está mais em processo de transição ou reforma; ela foi efetivamente implodida</span>. Entramos na era da "Lei da Selva", caracterizada pela militarização absoluta da economia, onde as superpotências usam de forma aberta tarifas comerciais, sanções financeiras, inteligência artificial e o controle de minerais críticos como armas coercitivas diretas.</p>
+                
+                <div class="quote-box">
+                    "Se você não está à mesa, você está no cardápio. As potências médias precisam 'tirar a placa da vitrine' — parar de fingir que a antiga ordem multilateral ainda funciona como anunciado — e buscar uma terceira via."
+                    <br><strong>— Mark Carney, em seu célebre manifesto "Principled and pragmatic: Canada’s path" (Davos, 2026).</strong>
+                </div>
+
+                <p>Para Carney, a resposta para potências médias (como Canadá, Brasil e outros) não deve ser o isolamento nacionalista e nem a submissão cega aos polos hegemônicos. A alternativa viável é a construção de uma <span class="highlight">Autonomia Estratégica Combinada</span> com uma <span class="highlight">Cooperação Seletiva</span>: a criação de coalizões flexíveis e acordos plurilaterais sob medida em setores específicos (segurança de dados, transição energética, defesa e minerais), operando com um "realismo baseado em valores" — aceitando o mundo cru como ele é, mas preservando salvaguardas mínimas de soberania.</p>
+
+                <div class="timeline-container">
+                    <h2 class="section-title">O Arco Evolutivo Sintetizado (Conexão Causal dos Fatos)</h2>
+                    
+                    <div class="timeline-item">
+                        <div class="year-marker">ANOS 1990</div>
+                        <div><strong>Pax Americana e Ilusão Liberal:</strong> Unipolaridade total. Rússia e China aceitam passivamente as regras e instituições financeiras ocidentais (FMI/OMC) por estarem fragilizadas ou precisando de inserção econômica. Há uma crença de estabilidade permanente e fim das disputas ideológicas.</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="year-marker">ANOS 2000</div>
+                        <div><strong>Erosão e Autonomia:</strong> O unilateralismo dos EUA na invasão do Iraque (2003) racha a legitimidade política do Ocidente. Paralelamente, a entrada da China na OMC dispara o <em>Boom das Commodities</em>, transferindo riqueza ao Sul Global e dando fôlego financeiro para emergentes contestarem o sistema. A crise de 2008 quebra o prestígio do capitalismo anglo-saxão.</div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="year-marker">ANOS 2010</div>
+                        <div><strong>Impasse do G-Zero:</strong> O poder se fragmenta. Nem o G-7 consegue ditar as regras sozinho e nem os emergentes (BRICS) possuem coesão para impor um novo modelo. O resultado é a paralisia das instituições em quatro grandes crises globais (financeira, comercial, climática e Irã), gerando uma profunda "Era da Ansiedade".</div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="year-marker">2020 — 2026</div>
+                        <div><strong>Implosão e Lei da Selva:</strong> A aliança China-Rússia e a invasão da Ucrânia rompem as fronteiras da ordem geopolítica. O retorno de Trump e a NSS de 2025 quebram a coesão ocidental interna ao adotar posturas puramente transacionais. A interdependência econômica vira arma e o sistema migra para o "cada um por si", forçando a busca por autonomia estratégica.</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <footer>
+        REPOSITÓRIO ACADÊMICO PESSOAL &bull; MINDS GLOBE &bull; ANÁLISE DE RELAÇÕES INTERNACIONAIS &bull; 2026
+    </footer>
+
+    <script>
+        // Transição suave entre as Abas
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Toggle dos Flashcards de Autores Acadêmicos
+        function toggleSolution(cardElement) {
+            const solutionBox = cardElement.querySelector('.solution-box');
+            solutionBox.classList.toggle('visible');
+            
+            const badge = cardElement.querySelector('.reveal-badge');
+            if(solutionBox.classList.contains('visible')) {
+                badge.innerText = "FECHAR";
+                badge.style.background = "#bfa175";
+            } else {
+                badge.innerText = "VER DETALHES";
+                badge.style.background = "#162235";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geografia dos Negócios Internacionais | Minds Globe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=400;500;700&family=Playfair+Display:ital,wght=0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght=300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* PALETA DE CORES OFICIAL MINDS GLOBE */
+        :root {
+            --bg-papiro: #f7f4ec;
+            --azul-marinho: #162235;
+            --champagne: #bfa175;
+            --branco: #ffffff;
+            --texto: #2b333f;
+            --borda-caixa: #eaddca;
+            --bg-caixa: #fcfaf6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            background-color: var(--bg-papiro);
+            color: var(--texto);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.8;
+            padding: 40px 20px;
+        }
+
+        .container { max-width: 1050px; margin: 0 auto; }
+
+        .grain-texture {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* BARRA NAVEGAÇÃO SUPERIOR - COPIADA IDENTICAMENTE DE IERI */
+        .nav-superior {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 35px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            color: var(--azul-marinho);
+            letter-spacing: 2px;
+            padding: 10px 20px;
+            border: 1px solid var(--champagne);
+            background: transparent;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .btn-back:hover {
+            color: var(--branco);
+            background-color: var(--azul-marinho);
+            border-color: var(--azul-marinho);
+            transform: translateX(-4px);
+            box-shadow: 0 4px 15px rgba(22, 34, 53, 0.08);
+        }
+
+        /* CABEÇALHO EDITORIAL ACADÊMICO */
+        header { text-align: center; margin-bottom: 40px; }
+        .pre-title { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 3px; color: var(--champagne); display: block; margin-bottom: 8px; }
+        header h1 { font-family: 'Cinzel', serif; font-size: 2.4rem; color: var(--azul-marinho); font-weight: 500; }
+        .subtitle { font-family: 'Playfair Display', serif; font-style: italic; color: #5c6674; font-size: 1.1rem; }
+        .header-line { width: 80px; height: 1px; background-color: var(--champagne); margin: 20px auto; }
+
+        /* ENVELOPE DO CONTEÚDO */
+        .notebook-cover {
+            background: var(--branco);
+            border: 1px solid var(--borda-caixa);
+            padding: 45px;
+            box-shadow: 0 12px 35px rgba(22, 34, 53, 0.03);
+        }
+
+        .tab-menu-wrapper { position: relative; margin-bottom: 35px; border-bottom: 1px solid var(--borda-caixa); }
+        .tab-menu { display: flex; gap: 8px; padding-bottom: 12px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+        .tab-menu::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            background: none; border: none; font-family: 'Cinzel', serif; font-size: 0.75rem;
+            letter-spacing: 1px; color: #8fa0b5; cursor: pointer; padding: 10px 16px; white-space: nowrap; transition: 0.3s;
+        }
+        .tab-btn.active { color: var(--azul-marinho); font-weight: 600; border-bottom: 2px solid var(--champagne); }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2.section-title { font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--azul-marinho); margin: 30px 0 20px; border-bottom: 1px dashed var(--borda-caixa); padding-bottom: 8px; }
+        h3 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--champagne); margin: 25px 0 15px; }
+        p { margin-bottom: 18px; text-align: justify; }
+
+        .concept-box { background: var(--bg-caixa); border: 1px solid var(--borda-caixa); padding: 25px; margin: 20px 0; }
+        .quote-box { font-family: 'Playfair Display', serif; font-style: italic; border-left: 3px solid var(--champagne); padding: 15px 20px; background: var(--bg-caixa); margin: 20px 0; }
+
+        .exercise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 25px 0; }
+        @media(max-width: 768px) { .exercise-grid { grid-template-columns: 1fr; } }
+        
+        .exercise-card { background: var(--bg-caixa); border: 1px dashed var(--borda-caixa); padding: 20px; cursor: pointer; transition: 0.3s; }
+        .exercise-card:hover { background: #fff; border-style: solid; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .reveal-badge { font-size: 0.65rem; background: var(--azul-marinho); color: #fff; padding: 3px 8px; font-family: 'Cinzel', serif; transition: 0.3s; }
+
+        .solution-box { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; font-size: 0.95rem; }
+        .solution-box.visible { max-height: 2000px; padding-top: 15px; border-top: 1px solid var(--borda-caixa); margin-top: 15px; }
+
+        footer { margin-top: 60px; text-align: center; font-size: 0.85rem; color: #7a828a; border-top: 1px solid var(--borda-caixa); padding: 25px 20px; font-family: 'Cinzel', serif; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <div class="grain-texture"></div>
+
+    <div class="container">
+        
+        <div class="nav-superior">
+            <a href="../index.html" class="btn-back">← Voltar ao Globo</a>
+        </div>
+
+        <header>
+            <span class="pre-title">Geografia dos Negócios Internacionais</span>
+            <h1>Portal Global Shift</h1>
+            <div class="subtitle">A Configuração das Redes Globais de Produção (GPNs)</div>
+            <div class="header-line"></div>
+        </header>
+
+        <div class="notebook-cover">
+            <div class="tab-menu-wrapper">
+                <div class="tab-menu" id="mainMenu">
+                    <button class="tab-btn active" onclick="switchTab(event, 'etns-china')">1. Dinâmica das ETNs & Pivot Chinês</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'logistica')">2. Logística & Circulação Global</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'infra-global')">3. Semicondutores & Finanças</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'vestuario')">4. Têxtil & Fenômeno Shein</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'automotiva')">5. Indústria Automotiva & Estado</button>
+                </div>
+            </div>
+
+            <div id="etns-china" class="tab-content active">
+                <h2 class="section-title">As Empresas Transnacionais (ETNs) & O Pivot Chinês</h2>
+                <p>As ETNs são os motores da mudança global, coordenando redes de produção que cruelmente cruzam fronteiras nacionais e desafiam a soberania dos Estados. <strong>Peter Dicken</strong> as define como atores capazes de transformar espaços através da dispersão geográfica e do controle centralizado. Paralelamente, o Estado chinês utilizou deliberadamente a atratividade do seu território para absorver este capital transnacional e transformar o país de "chão de fábrica" em uma superpotência tecnológica.</p>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Lógica de Poder e Barganha (ETNs)</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            As ETNs operam em duas dimensões cruciais:
+                            <br><br>
+                            1. <strong>Económica:</strong> Maximização de eficiência, busca por lucro e captura de valor nos elos mais rentáveis das Redes Globais de Produção (RGPs).
+                            <br><br>
+                            2. <strong>Política:</strong> Relação de barganha assimétrica com os Estados. Caso Foxconn no Wisconsin (EUA): o Estado ofereceu 3 mil milhões de dólares em incentivos, mas a empresa reduziu drasticamente os empregos prometidos, provando que o capital móvel pode tornar os Estados "reféns".
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>O Paradigma OLI (Dunning)</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            Para uma firma realizar Investimento Direto Estrangeiro (IDE), ela precisa de articular 3 vantagens fundamentais:
+                            <br><br>
+                            • <strong>Ownership (Propriedade):</strong> Ativos exclusivos e intangíveis, como a tecnologia Blade da BYD.
+                            <br><br>
+                            • <strong>Location (Localização):</strong> Atrativos institucionais e geográficos do país destino (ex: ZEEs na China ou Camaçari no Brasil para mitigar barreiras tarifárias).
+                            <br><br>
+                            • <strong>Internalization (Internalização):</strong> Preferência por manter o controlo direto da produção em vez de licenciar, protegendo o know-how contra cópias.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>✦ O Ciclo de Vida do Produto (Vernon) e o Mito do "Sem Raízes"</h4>
+                    <p>O produto nasce na <strong>Inovação (País Central)</strong>, amadurece na <strong>Exportação</strong> e finaliza na <strong>Padronização/Offshoring</strong> em países periféricos de baixo custo. Contudo, Dicken prova que a ETN não é "apátrida": as decisões estratégicas, patentes e o capital financeiro principal permanecem ancorados na sede nacional. 
+                    <br><br>
+                    O <strong>McDonald's</strong> exemplifica com maestria a <strong>Glocalização</strong>: mantém a essência do padrão Taylorista de serviço americano, mas adapta o cardápio (McAloo Tikki na Índia, itens de confeitaria fina na França e Pão de Queijo no Brasil) para respeitar as particularidades locais e territoriais.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>✦ Zonas Económicas Especiais (ZEEs) e o Salto "Created in China"</h4>
+                    <p>A abertura económica liderada por Deng Xiaoping utilizou Shenzhen e Zhuhai como portas de entrada controladas. A China atraiu as ETNs ocidentais oferecendo isenções fiscais massivas em troca de <strong>Transferência compulsória de Tecnologia</strong> e a formação de <strong>Joint Ventures</strong> com empresas estatais locais. 
+                    <br><br>
+                    Esse ecossistema permitiu o salto histórico do <strong>"Made in China"</strong> (montagem simples de componentes importados com mão de obra barata) para o <strong>"Created in China"</strong>, onde o país agora assume o protagonismo na fronteira tecnológica global, liderando o desenvolvimento de redes 5G (Huawei) e o fornecimento mundial de baterias de íon-lítio (CATL e BYD).</p>
+                </div>
+
+                <div class="exercise-card" onclick="toggleSolution(this)" style="width: 100%;">
+                    <div class="card-header"><strong>A Diplomacia das Redes Globais (Roteiro e Contexto Geopolítico)</strong><div class="reveal-badge"></div></div>
+                    <div class="solution-box">
+                        As cadeias globais de suprimentos estão hoje no centro da disputa hegemónica entre Washington e Pequim. As intensas movimentações diplomáticas — como os encontros estratégicos de <strong>Xi Jinping com Donald Trump, Vladimir Putin e a interlocução com o chanceler brasileiro Mauro Vieira</strong> — desenham uma nova arquitetura global multipolar. A China utiliza deliberadamente o seu monumental poder de mercado e o controle sobre elos industriais críticos para contestar a governança financeira ocidental e consolidar as suas redes de infraestrutura global (como a Nova Rota da Seda).
+                    </div>
+                </div>
+            </div>
+
+            <div id="logistica" class="tab-content">
+                <h2 class="section-title">Logística, Circulação e a Compressão Espaço-Tempo</h2>
+                <p>A logistics é o sistema circulatório da globalização, atuando diretamente no combate ao <strong>Atrito do Espaço</strong>, que representa os custos de tempo e dinheiro necessários para movimentar mercadorias ao longo de redes geograficamente dispersas.</p>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>O Papel Dual do Estado na Circulação</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            O Estado atua de forma contraditória nas redes de fluxos:
+                            <br><br>
+                            1. <strong>Como Contêiner/Obstáculo:</strong> Aplicação de barreiras tarifárias, vistorias alfandegárias rígidas e regulações burocráticas que aumentam o atrito e desaceleram o comércio internacional.
+                            <br><br>
+                            2. <strong>Como Facilitador:</strong> Investimento em portos de águas profundas, aeroportos de carga e celebração de acordos regionais de comércio para garantir fluidez total.
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Inovações Tecnológicas de Compressão</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            • <strong>Contentorização & Intermodalidade:</strong> A revolução de Malcom McLean permitiu que o mesmo contêiner padronizado passe de navios para comboios e camiões sem a necessidade de abrir a carga, reduzindo os custos de movimentação nos portos em mais de 90%.
+                            <br><br>
+                            • <strong>Just-in-Time (JIT) e Logística Digital:</strong> A eliminação de stocks estáticos através de rastreamento via satélite, algoritmos preditivos e automação de armazéns, transformando os fluxos de mercadorias em processos contínuos.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    "A nova geografia da logística global deslocou o eixo comercial do Atlântico para o <strong>Leste Asiático</strong>, onde os megaportos de Xangai e Shenzhen lideram o tráfego de mercadorias. Cidades-Hub continentais como <strong>Memphis (FedEx)</strong> e <strong>Louisville (UPS)</strong> tornaram-se nós estratégicos de carga aérea, enquanto <strong>Anchorage (Alasca)</strong> funciona como o ponto de paragem técnico vital para voos transcontinentais entre as Américas e a Ásia devido à curvatura da Terra."
+                </div>
+            </div>
+
+            <div id="infra-global" class="tab-content">
+                <h2 class="section-title">A Infraestrutura da Economia: Semicondutores & Serviços Financeiros</h2>
+                <p>Os semicondutores funcionam como o sistema nervoso digital do planeta, enquanto o sistema financeiro organiza a circulação líquida do capital mundial. Ambos os setores representam elos altamente complexos, voláteis e vitais para a soberania económica e estabilidade das redes de produção.</p>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Arquitetura de Chips: IDM vs Fabless-Foundry</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            O setor de semicondutores é impulsionado pela <strong>Lei de Moore</strong> (dobro da capacidade a cada 2 anos), gerando ciclos constantes de <strong>Destruição Criativa de Schumpeter</strong>. Organiza-se em:
+                            <br><br>
+                            • <strong>IDM (Intel e Samsung):</strong> Modelo integrado que projeta, desenvolve e fabrica os chips internamente.
+                            <br><br>
+                            • <strong>Fabless (Apple, Nvidia, AMD):</strong> Empresas de deep tech que detêm patentes e desenham os circuitos arquitetónicos, mas não possuem fundições físicas.
+                            <br><br>
+                            • <strong>Foundries (TSMC Taiwan):</strong> Fundições puras especializadas na manufatura física de alta precisão. O monopólio de Taiwan nos chips abaixo de 3 nanómetros gera uma vulnerabilidade geopolítica extrema na disputa hegemónica mundial.
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>A Estrutura do Sistema Financeiro Global</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            O sistema financeiro funciona de maneira totalmente conectada e interligada em três grandes pilares:
+                            <br><br>
+                            1. <strong>Instituições Bancárias e de Crédito:</strong> Captação, direcionamento de recursos e fornecimento de crédito diário para empresas e indivíduos.
+                            <br><br>
+                            2. <strong>Mercado de Capitais e Investimentos:</strong> Bolsas de valores, corretoras e fundos estruturados que facilitam a aplicação de capitais de longo prazo nas atividades produtivas.
+                            <br><br>
+                            3. <strong>Meios de Pagamento & Órgãos de Regulação:</strong> Infraestrutura tecnológica (PIX, cartões, carteiras digitais) combinada com a fiscalização macroeconómica para conter riscos e garantir a liquidez global.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>✦ Intervenção Estatal: CHIPS Act e a Doutrina "Too Big to Fail"</h4>
+                    <p>Tanto no setor tecnológico quanto no financeiro, o Estado é obrigado a intervir para salvar o sistema de colapsos sistémicos:
+                    <br><br>
+                    • <strong>Nos Semicondutores:</strong> A escassez severa de memórias RAM/NAND e a dependência concentrada na Ásia fizeram com que os EUA e a União Europeia aprovassem o <strong>Chips Act</strong>. São centenas de bilhões de dólares em subsídios diretos para forçar o <strong>Onshoring</strong> (retorno das fábricas/Fabs aos seus territórios), tratando a tecnologia como segurança nacional estratégica.
+                    <br><br>
+                    • <strong>Nas Finanças Globais:</strong> A Crise do Subprime em 2008 evidenciou o conceito de <strong>Too Big to Fail (Gigantes Demais para Falirem)</strong>. A quebra em cadeia de grandes bancos globais arrastaria toda a economia mundial para a insolvência, exigindo resgates estatais astronómicos e uma reestruturação da governança internacional mediada pelo <strong>FMI</strong> para equilibrar a inovação financeira e a estabilidade social.</p>
+                </div>
+            </div>
+
+            <div id="vestuario" class="tab-content">
+                <h2 class="section-title">Indústria do Vestuário & O Fenômeno Ultra-Fast-Fashion</h2>
+                <p>O vestuário representa o exemplo mais clássico de fragmentação produtiva globalizada. É uma cadeia historicamente governada pelo comprador (<strong>Buyer-Driven Chain</strong>), onde os maiores elos de rentabilidade e captura de valor estão ancorados no design, na gestão da marca e no marketing, e não no processo físico de costura.</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>O Modelo de Negócios Reversivo da Shein</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            A Shein rompeu a lógica de regionalização tradicional (utilizada por marcas como a Zara) através de uma cadeia puramente digitalizada e orientada a dados:
+                            <br><br>
+                            1. <strong>Inteligência Artificial Preditiva:</strong> Monitoramento automatizado de redes sociais (TikTok e Instagram) para identificar micro-tendências comportamentais em tempo real.
+                            <br><br>
+                            2. <strong>Produção em Micro-lotes Flexíveis:</strong> Fabricação inicial de apenas 100 a 200 unidades por peça. Se o algoritmo detetar tração nas vendas, a produção em massa é escalada em pequenas fábricas parceiras em menos de 48 horas.
+                            <br><br>
+                            3. <strong>Logística Direta Hub-to-Consumer:</strong> Eliminação completa de centros de distribuição nos países de destino. Os produtos saem diretamente dos polos manufatureiros da China para a residência do consumidor global via frete aéreo individualizado.
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>A "Corrida para o Fundo" (Race to the Bottom) & Ética</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            A busca incessante por margens de lucro elevadas empurra a produção de roupas para territórios com os menores custos salariais possíveis e legislações trabalhistas/ambientais fragilizadas (migrando de regiões costeiras da China para o interior asiático, Bangladesh e Etiópia).
+                            <br><br>
+                            A <strong>Tragédia do desabamento do Rana Plaza (2013)</strong> em Bangladesh, que vitimou mais de 1.100 trabalhadores, expôs publicamente o lado sombrio do *fast-fashion*, caracterizado por uma força de trabalho altamente vulnerável (composta por cerca de 80% de mulheres jovens migrantes). Esse marco histórico pressionou as corporações globais a implementarem auditorias externas e <strong>Códigos de Conduta Corporativos</strong> rigorosos.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="automotiva" class="tab-content">
+                <h2 class="section-title">Indústria Automobilística, Geopolítica & O Papel do Estado</h2>
+                <p>Peter Dicken quebra um grande mito do senso comum: o setor automotivo não opera em escala puramente global, mas organiza-se sob uma lógica estritamente <strong>Regionalizada</strong>. Cerca de 75% de todo o comércio de componentes e veículos físicos ocorre dentro de três blocos geográficos fechados: Europa, América do Norte e Leste Asiático. O sucesso ou fracasso das montadoras transnacionais depende umbilicalmente da forma como gerem as suas relações de força com o Estado-Nação.</p>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>O Jogo de Taxas e as 3 Formas de Organização de Mercado</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            O Estado-Nação molda a geografia automotiva por meio de três estratégias estruturais de mercado (Capítulo 12 de Peter Dicken):
+                            <br><br>
+                            • <strong>Regras de Conteúdo Local:</strong> Exigência legal de que uma percentagem substancial das peças do veículo seja fabricada em território nacional, forçando a ETN a desenvolver fornecedores locais em vez de apenas importar o carro pronto.
+                            <br><br>
+                            • <strong>Protecionismo Defensivo e Barreiras Tarifárias:</strong> O uso de pesadas taxas alfandegárias para blindar a indústria doméstica e forçar as montadoras estrangeiras a construírem fábricas físicas no país (ex: o fenômeno das Maquiladoras no México).
+                            <br><br>
+                            • <strong>As Três Abordagens Estatais:</strong> 1. Protecionismo e substituição de importações direto; 2. Liberalização negociada através de blocos e acordos regionais (Mercosul, UE); 3. Parcerias obrigatórias via <strong>Joint Ventures forçadas</strong>, modelo amplamente utilizado pelo Estado chinês para absorver a tecnologia ocidental.
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Predisposição de Origem: O Contraste GM vs Ford</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            A cultura institucional do país de origem molda a governança da ETN ao longo das décadas:
+                            <br><br>
+                            • <strong>General Motors (GM):</strong> Adotou uma estratégia de federação descentralizada. Comprou marcas nacionais tradicionais já estabelecidas nos mercados externos (como a Opel na Alemanha e a Holden na Austrália), conferindo-lhes ampla autonomia de engenharia e design para atender as preferências locais.
+                            <br><br>
+                            • <strong>Ford:</strong> Histórica e culturalmente centralizadora a partir de Detroit. Tentou implementar o conceito de "Carro Mundial" (plataformas únicas padronizadas globalmente, como o projeto Mondeo), enfrentando graves resistências de adaptação mercadológica e barreiras regulatórias locais.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>✦ A Transição Ecológica e a Nova Hegemonia nos Veículos Elétricos (VEs)</h4>
+                    <p>A migração forçada dos motores tradicionais a combustão para os <strong>Veículos Elétricos e Híbridos</strong> alterou profundamente a cadeia de valor automotiva, deslocando o coração do lucro da engenharia mecânica mecânica para o desenvolvimento químico de células de bateria e sistemas de software incorporados. 
+                    <br><br>
+                    O controle férreo da China sobre a mineração, refino de terras raras e a manufatura em larga escala de insumos de lítio conferiu às montadoras chinesas (como BYD e Geely) uma vantagem competitiva avassaladora de custos. Isso forçou as marcas tradicionais do Ocidente a buscarem alianças tecnológicas de dependência ou a pressionarem os seus respetivos governos por novas e severas barreiras protecionistas para conter a expansão asiática.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        REPOSITÓRIO ACADÊMICO PESSOAL &bull; MINDS GLOBE &bull; NÚCLEO DE RELAÇÕES INTERNACIONAIS &bull; 2026
+    </footer>
+
+    <script>
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            const selectedBtn = event.currentTarget;
+            selectedBtn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+            selectedBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
+        // Script de inicialização dos cartões dinâmicos de estudo ativo
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.exercise-card .reveal-badge').forEach(badge => {
+                badge.innerText = "VER DETALHES";
+            });
+        });
+
+        function toggleSolution(cardElement) {
+            const solutionBox = cardElement.querySelector('.solution-box');
+            solutionBox.classList.toggle('visible');
+            const badge = cardElement.querySelector('.reveal-badge');
+            if(solutionBox.classList.contains('visible')) {
+                badge.innerText = "FECHAR DETALHES";
+                badge.style.background = "#bfa175";
+            } else {
+                badge.innerText = "VER DETALHES";
+                badge.style.background = "#162235";
+            }
+        }
+    </script>
+</body>
+</html>

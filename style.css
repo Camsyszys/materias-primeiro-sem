@@ -1,0 +1,262 @@
+/* --- FUNDAÇÕES GERAIS --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f7f4ec; /* Off-white pergaminho suave */
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #1e242b;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Camada de grão sutil para textura editorial de revista */
+.grain-texture {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.content-nexus {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 40px 30px 80px 30px;
+}
+
+/* --- TOPO COM GLOBO CARTOGRÁFICO VETORIAL --- */
+.hero-nexus {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 70px 20px 50px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaddca;
+}
+
+.globe-container {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glow-effect {
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(191, 161, 117, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.sphere {
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    background-color: #f4eee1; /* Cor areia fina para os oceanos */
+    border: 1px solid #dcd1be;
+    box-shadow: inset -25px -25px 60px rgba(0, 0, 0, 0.08), 
+                inset 10px 10px 30px rgba(255, 255, 255, 0.6),
+                0 15px 35px rgba(26, 31, 38, 0.04);
+}
+
+/* Desenho dos continentes injetado via SVG seguro para rodar puro */
+.map-texture-svg {
+    width: 200%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Cpath fill='%23bfa175' opacity='0.45' d='M20,40 Q40,20 60,35 T100,30 T140,50 T160,80 T130,120 T90,130 T50,110 T20,70 Z M220,40 Q240,20 260,35 T300,30 T340,50 T360,80 T330,120 T290,130 T250,110 T220,70 Z M70,60 Q85,45 95,65 T120,70 T110,95 Z M270,60 Q285,45 295,65 T320,70 T310,95 Z'/%3E%3C/svg%3E");
+    background-size: 50% 100%;
+    background-repeat: repeat-x;
+    animation: spinGlobe 30s linear infinite;
+    will-change: transform;
+}
+
+@keyframes spinGlobe {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.sphere-shadow {
+    position: absolute;
+    bottom: -3px;
+    width: 170px;
+    height: 12px;
+    background: rgba(158, 133, 92, 0.15);
+    border-radius: 50%;
+    filter: blur(5px);
+}
+
+/* --- TITULAÇÃO EDITORIAL --- */
+.pre-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #9e855c;
+    letter-spacing: 3px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.hero-content h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    letter-spacing: 4px;
+    color: #162235;
+}
+
+.hero-content h1 span {
+    color: #bfa175;
+}
+
+.hero-content p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #5c6674;
+    max-width: 600px;
+    margin: 12px auto 0 auto;
+    line-height: 1.6;
+}
+
+.header-line {
+    width: 60px;
+    height: 1px;
+    background-color: #bfa175;
+    margin: 30px auto 0 auto;
+}
+
+/* --- GRADE DE MATÉRIAS --- */
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 35px;
+}
+
+/* --- CARDS EDITORIAIS PREMIUM (EFEITO SALTO 3D) --- */
+.nexus-card {
+    position: relative;
+    height: 390px;
+    background-color: #11141a;
+    text-decoration: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(26, 31, 38, 0.05);
+    
+    /* Prepara o card para receber projeção tridimensional perfeita */
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* Imagem de Fundo (Começa P&B e ganha cor no foco) */
+.card-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%) brightness(0.45);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
+}
+
+/* Película escura para dar contraste ao texto */
+.card-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to top, rgba(17, 22, 28, 0.95) 15%, rgba(17, 22, 28, 0.3) 60%, transparent 100%);
+    z-index: 1;
+    transition: opacity 0.5s ease;
+}
+
+/* Conteúdo flutuando em camadas acima da foto */
+.card-info {
+    position: relative;
+    z-index: 2;
+    transform: translateZ(40px); /* Empurra o texto para frente */
+    pointer-events: none;
+}
+
+.label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #e2d1b9;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.card-info h2 {
+    font-family: 'Cinzel', serif;
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+
+.card-info p {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-weight: 300;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- MICRO-INTERAÇÕES (HOVER) --- */
+.nexus-card:hover {
+    box-shadow: 0 30px 60px rgba(15, 18, 22, 0.2);
+}
+
+.nexus-card:hover .card-bg {
+    filter: grayscale(0%) brightness(0.65);
+    transform: scale(1.06);
+}
+
+.nexus-card:hover h2 {
+    color: #e2d1b9;
+}
+
+.nexus-card:hover .card-info p {
+    opacity: 0.95;
+    transform: translateY(0);
+}
+
+/* --- RODAPÉ INSTITUCIONAL --- */
+.nexus-footer {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: #8fa0b5;
+    border-top: 1px solid #eaddca;
+    background-color: #ffffff;
+    margin-top: 80px;
+}
+
+/* --- DISPOSITIVOS MÓVEIS (CELULAR) --- */
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.6rem; }
+    .subject-grid { grid-template-columns: 1fr; gap: 25px; }
+    .nexus-card { height: 350px; }
+    .card-info p { opacity: 0.9; transform: translateY(0); } /* Sempre visível no mobile */
+}

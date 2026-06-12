@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciências Sociais Aplicadas | Minds Globe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=400;500;700&family=Playfair+Display:ital,wght=0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght=300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* PALETA DE CORES OFICIAL MINDS GLOBE */
+        :root {
+            --bg-papiro: #f7f4ec;
+            --azul-marinho: #162235;
+            --champagne: #bfa175;
+            --branco: #ffffff;
+            --texto: #2b333f;
+            --borda-caixa: #eaddca;
+            --bg-caixa: #fcfaf6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            background-color: var(--bg-papiro);
+            color: var(--texto);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.8;
+            padding: 40px 20px;
+        }
+
+        .container { max-width: 1050px; margin: 0 auto; }
+
+        .grain-texture {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* BARRA NAVEGAÇÃO SUPERIOR INDEPENDENTE - PADRÃO PREMIUM IERI */
+        .nav-superior {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 35px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            color: var(--azul-marinho);
+            letter-spacing: 2px;
+            padding: 10px 20px;
+            border: 1px solid var(--champagne);
+            background: transparent;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .btn-back:hover {
+            color: var(--branco);
+            background-color: var(--azul-marinho);
+            border-color: var(--azul-marinho);
+            transform: translateX(-4px);
+            box-shadow: 0 4px 15px rgba(22, 34, 53, 0.08);
+        }
+
+        /* CABEÇALHO EDITORIAL ACADÊMICO */
+        header { text-align: center; margin-bottom: 40px; }
+        .pre-title { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 3px; color: var(--champagne); display: block; margin-bottom: 8px; }
+        header h1 { font-family: 'Cinzel', serif; font-size: 2.4rem; color: var(--azul-marinho); font-weight: 500; }
+        .subtitle { font-family: 'Playfair Display', serif; font-style: italic; color: #5c6674; font-size: 1.1rem; }
+        .header-line { width: 80px; height: 1px; background-color: var(--champagne); margin: 20px auto; }
+
+        /* ENVELOPE DO CONTEÚDO */
+        .notebook-cover {
+            background: var(--branco);
+            border: 1px solid var(--borda-caixa);
+            padding: 45px;
+            box-shadow: 0 12px 35px rgba(22, 34, 53, 0.03);
+        }
+
+        /* BARRA DE NAVEGAÇÃO DE ABAS CONSOLIDADA */
+        .tab-menu-wrapper { position: relative; margin-bottom: 35px; border-bottom: 1px solid var(--borda-caixa); }
+        .tab-menu { display: flex; gap: 8px; padding-bottom: 12px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+        .tab-menu::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            background: none; border: none; font-family: 'Cinzel', serif; font-size: 0.75rem;
+            letter-spacing: 1px; color: #8fa0b5; cursor: pointer; padding: 10px 16px; white-space: nowrap; transition: 0.3s;
+        }
+        .tab-btn.active { color: var(--azul-marinho); font-weight: 600; border-bottom: 2px solid var(--champagne); }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* TIPOGRAFIA E ESTILOS INTERNOS */
+        h2.section-title { font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--azul-marinho); margin: 30px 0 20px; border-bottom: 1px dashed var(--borda-caixa); padding-bottom: 8px; }
+        h3 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--champagne); margin: 25px 0 15px; letter-spacing: 0.5px; }
+        p { margin-bottom: 18px; text-align: justify; font-size: 1rem; }
+        
+        ul, ol { margin-left: 25px; margin-bottom: 18px; color: var(--texto); }
+        li { margin-bottom: 8px; }
+
+        .concept-box { background: var(--bg-caixa); border: 1px solid var(--borda-caixa); padding: 25px; margin: 20px 0; border-radius: 4px; }
+        .concept-box h4 { font-family: 'Cinzel', serif; color: var(--azul-marinho); margin-bottom: 12px; font-size: 1rem; }
+        .quote-box { font-family: 'Playfair Display', serif; font-style: italic; border-left: 3px solid var(--champagne); padding: 15px 20px; background: var(--bg-caixa); margin: 20px 0; color: #4a5462; }
+
+        /* ESTILIZAÇÃO DO QUADRO COMPARATIVO E MATRIZES */
+        .table-responsive { overflow-x: auto; margin: 30px 0; border: 1px solid var(--borda-caixa); border-radius: 4px; }
+        table.minds-table { width: 100%; border-collapse: collapse; text-align: left; background: var(--branco); font-size: 0.95rem; }
+        table.minds-table th { background: var(--azul-marinho); color: var(--branco); font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 1px; padding: 12px 15px; text-transform: uppercase; }
+        table.minds-table td { padding: 14px 15px; border-bottom: 1px solid var(--borda-caixa); color: var(--texto); vertical-align: top; }
+        table.minds-table tr:nth-child(even) td { background: var(--bg-caixa); }
+
+        /* GRID DOS FLASHCARDS DE ESTUDO ATIVO */
+        .exercise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 25px 0; }
+        
+        .exercise-card { background: var(--bg-caixa); border: 1px dashed var(--borda-caixa); padding: 20px; cursor: pointer; transition: 0.3s; border-radius: 4px; position: relative; }
+        .exercise-card:hover { background: #fff; border-style: solid; box-shadow: 0 6px 18px rgba(22, 34, 53, 0.02); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid rgba(191, 161, 117, 0.15); padding-bottom: 8px; }
+        .reveal-badge { font-size: 0.65rem; background: var(--azul-marinho); color: #fff; padding: 3px 8px; font-family: 'Cinzel', serif; transition: 0.3s; letter-spacing: 0.5px; font-weight: 600; white-space: nowrap; }
+
+        .solution-box { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; font-size: 0.95rem; color: var(--texto); line-height: 1.7; text-align: justify; }
+        .solution-box.visible { max-height: 2500px; padding-top: 15px; border-top: 1px dashed var(--borda-caixa); margin-top: 15px; }
+
+        /* RESPONSIVIDADE ADICIONADA COM RIGOR PARA DISPOSITIVOS MÓVEIS */
+        @media(max-width: 900px) {
+            body { padding: 20px 10px; }
+            .notebook-cover { padding: 20px; }
+            header h1 { font-size: 1.8rem; }
+            .exercise-grid { grid-template-columns: 1fr; gap: 15px; }
+            table.minds-table { font-size: 0.85rem; }
+            table.minds-table th, table.minds-table td { padding: 10px; }
+        }
+
+        footer { margin-top: 60px; text-align: center; font-size: 0.85rem; color: #7a828a; border-top: 1px solid var(--borda-caixa); padding: 25px 20px; font-family: 'Cinzel', serif; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <div class="grain-texture"></div>
+
+    <div class="container">
+        
+        <!-- BARRA NAVEGAÇÃO SUPERIOR INDEPENDENTE DO CORPO E SEM CAIXAS -->
+        <div class="nav-superior">
+            <a href="../index.html" class="btn-back">← Voltar ao Globo</a>
+        </div>
+
+        <header>
+            <span class="pre-title">Núcleo de Teoria Crítica e Pensamento Social</span>
+            <h1>Sociologia Geral & Política Brasileira</h1>
+            <div class="subtitle">Análise Unificada dos Clássicos, Estruturas Sociais, Burocracia, Dinâmicas de Poder e o Espaço Digital</div>
+            <div class="header-line"></div>
+        </header>
+
+        <div class="notebook-cover">
+            
+            <!-- MENU INTEGRADO EM 5 GRANDES NÚCLEOS LOGÍSTICO-TEMÁTICOS -->
+            <div class="tab-menu-wrapper">
+                <div class="tab-menu" id="mainMenu">
+                    <button class="tab-btn active" onclick="switchTab(event, 'positivismo-classicos')">1. Positivismo & Sociologia Clássica</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'estrutura-interacao')">2. Estrutura Social & Dinâmicas de Grupo</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'burocracia-eleitor')">3. Burocracia Weberiana & Escolha Racional</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'sociedade-brasil')">4. Raízes Históricas & Transições do Brasil</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'populismo-trabalho')">5. Populismo Digital, Cultura & Trabalho</button>
+                </div>
+            </div>
+
+            <!-- NÚCLEO 1: O POSITIVISMO E OS CLÁSSICOS DA SOCIOLOGIA -->
+            <div id="positivismo-classicos" class="tab-content active">
+                <h2 class="section-title">O Positivismo e a Ordem Social</h2>
+                <p>Formulado originalmente por Auguste Comte, o Positivismo enxerga a sociedade através de métodos científicos rigorosos baseados nas ciências naturais. O lema inscrito na bandeira nacional brasileira, "Ordem e Progresso", constitui uma adaptação direta da máxima comteana: "O Amor por princípio e a Ordem por base; o Progresso por fim".</p>
+                
+                <p>O arcabouço positivista nasceu no século XIX em meio ao caos social, à miséria urbana e ao desemprego gerados pela consolidação abrupta do capitalismo e pelas transformações da Revolução Industrial. Configura-se historicamente como uma reação conservadora contra as premissas revolucionárias dos Iluministas, buscando mitigar as tensões sociais por meio do estabelecimento de leis científicas e previsíveis que regulassem a harmonia civil.</p>
+                
+                <div class="quote-box">
+                    <strong>Evolucionismo Cultural nas RI:</strong> Sob a ótica positivista e etnocêntrica, a globalização é analisada como a meta final e a prova irrefutável da evolução social. Defende-se a existência de uma linha evolucionária universal única onde todas as sociedades marcham progressivamente rumo à ciência e à razão ocidental (tendo como modelo o desenvolvimento europeu), gerando com o tempo uma espécie de "solidariedade mecânica planetária".
+                </div>
+
+                <h3>Tabela Comparativa dos Métodos Clássicos</h3>
+                <p>Esta matriz resume como cada pensador responde às perguntas fundamentais da sociologia sobre a relação intrínseca entre indivíduo e sociedade:</p>
+
+                <div class="table-responsive">
+                    <table class="minds-table">
+                        <thead>
+                            <tr>
+                                <th>Sociólogo</th>
+                                <th>Método de Análise</th>
+                                <th>Relação Indivíduo x Sociedade</th>
+                                <th>O Motor da Sociedade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Auguste Comte / Émile Durkheim</strong></td>
+                                <td>Positivista / Funcionalista</td>
+                                <td>A sociedade predomina sobre o indivíduo. O Fato Social é uma estrutura externa, geral e coercitiva.</td>
+                                <td><strong>Integração e Controle:</strong> Manutenção da coesão por meio de normas sociais e instituições fortes.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Max Weber</strong></td>
+                                <td>Compreensivo</td>
+                                <td>A sociedade é um construto derivado das ações dos indivíduos. Depende essencialmente do sentido atribuído à Ação Social.</td>
+                                <td><strong>Racionalização:</strong> O processo histórico de desencantamento do mundo e burocratização da vida.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Karl Marx</strong></td>
+                                <td>Dialético (Materialismo Histórico)</td>
+                                <td>Relação contraditória e recíproca sujeito-objeto. O indivíduo é fundamentalmente condicionado pela infraestrutura material.</td>
+                                <td><strong>Luta de Classes:</strong> O conflito crônico e estrutural entre a classe exploradora e a explorada.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title">Detalhamento Teórico dos Clássicos</h2>
+                
+                <h3>✦ Émile Durkheim: O Fato Social e a Coesão</h3>
+                <p>O <strong>Fato Social</strong> compreende as maneiras de agir, pensar e sentir que exercem uma força coercitiva sobre o indivíduo e que existem de forma independente de sua vontade particular. A <strong>Socialização</strong> atua como o processo pedagógico estrutural que transmite normas e valores homogêneos para garantir a estabilidade da comunidade. Quem descumpre as regras estabelecidas sofre punições sociais variáveis conforme a gravidade da falta.</p>
+                <p>Na sua análise sobre a <strong>Divisão do Trabalho</strong>, Durkheim argumenta que a especialização das funções modernas vai além do ganho econômico material: ela gera a <strong>Solidariedade Orgânica</strong>, caracterizada por uma interdependência funcional que une de forma orgânica os indivíduos na era moderna.</p>
+
+                <h3>✦ Max Weber: A Ação Humana e o Sentido</h3>
+                <p>Para Weber, a sociologia deve focar na compreensão interpretativa do sentido subjetivo que o indivíduo confere à sua própria conduta, a qual é orientada esperando uma reação dos outros atores. Ele divide as orientações nas seguintes <strong>Tipologias da Ação Social</strong>:</p>
+                <ul>
+                    <li><strong>Racional com relação a fins:</strong> Quando a conduta é orientada para atingir um objetivo técnico previamente planejado e mensurado (ex: maximização de lucros).</li>
+                    <li><strong>Racional com relação a valores:</strong> Guiada estritamente pela fidelidade a princípios morais, éticos, políticos ou religiosos, independente das consequências práticas.</li>
+                    <li><strong>Afetiva:</strong> Ação predominantemente irracional, ditada por emoções, sentimentos ou paixões imediatas do agente.</li>
+                    <li><strong>Tradicional:</strong> Conduta baseada em costumes profundamente arraigados, hábitos cotidianos e heranças culturais internalizadas.</li>
+                </ul>
+
+                <h3>✦ Karl Marx: O Materialismo Histórico e a Crítica ao Capital</h3>
+                <p>Marx diagnostica uma <strong>Socialização Assimétrica</strong>, na qual os aparatos de ensino e cultura no capitalismo instruem a vasta maioria dos trabalhadores a aceitarem a desigualdade socioeconômica, normalizando o fato histórico de que uma minoria detenha a propriedade privada dos meios de produção. A sua anatomia social divide a realidade em dois eixos:</p>
+                <ul>
+                    <li><strong>Infraestrutura:</strong> A base material e econômica da sociedade, constituída pelas forças produtivas e pelas relações de produção contraditórias travadas entre a burguesia e o proletariado.</li>
+                    <li><strong>Superestrutura:</strong> O aparato político-ideológico e jurídico (composto pelo Estado, o Direito, a Religião e a Filosofia) erguido pela classe dominante com a função explícita de legitimar e perpetuar a exploração material. O poder político, neste sentido, constitui a opressão organizada de uma classe sobre a outra.</li>
+                </ul>
+                <p>O processo de exploração se consolida pela <strong>Alienação</strong> e pela extração da <strong>Mais-Valia</strong> (a parcela de trabalho realizada pelo operário e não paga pelo capitalista): a <em>Mais-valia absoluta</em> ocorre pelo aumento real das horas da jornada de trabalho; a <em>Mais-valia relativa</em> dá-se pelo incremento da intensidade produtiva por meio da introdução de tecnologia. As discussões contemporâneas (como as mobilizações pelo Fim da Escala 6x1) refletem na atualidade a persistência da luta de classes e a busca por direitos trabalhistas previstos na matriz teórica marxista.</p>
+            </div>
+
+            <!-- NÚCLEO 2: 👥 MÓDULO 2: ESTRUTURA SOCIAL, INTERAÇÃO E INDIVÍDUO -->
+            <div id="estrutura-interacao" class="tab-content">
+                <h2 class="section-title">Elementos Constituidores da Estrutura Social</h2>
+                <p>A estrutura social consiste em padrões duradouros, estáveis e institucionalizados que organizam as relações interativas em uma determinada sociedade. Ela é segmentada operacionalmente por três componentes nucleares:</p>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Status Social (Atribuído vs. Adquirido)</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            O <strong>Status</strong> representa a posição social formal ou informal que o indivíduo ocupa na malha social. Divide-se em:
+                            <br><br>
+                            • <strong>Status Atribuído:</strong> Posição conferida ao indivíduo de forma independente de sua vontade, esforço ou escolha pessoal, decorrendo de fatores biológicos ou de nascimento (como laços de parentesco, gênero e linhagem étnica).
+                            <br><br>
+                            • <strong>Status Adquirido:</strong> Posição alcançada ou conquistada pelo indivíduo ao longo da sua trajetória existencial por meio de escolhas, esforço, educação ou conquistas materiais (como a formação em uma profissão ou cargos políticos).
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Papéis Sociais & Instituições</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            • <strong>Papéis Sociais:</strong> Constituem o conjunto normativo de comportamentos, obrigações, direitos e expectativas que a coletividade projeta e espera de quem ocupa determinado status social.
+                            <br><br>
+                            • <strong>Instituições Sociais:</strong> Estruturas organizadas, estáveis e autopreervadas que desempenham funções essenciais na coordenação da vida coletiva e na manutenção da ordem (sendo exemplificadas pela Família, o Governo, o Sistema Educacional, as Organizações Religiosas e a Economia).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>✦ A Gênese Interativa do "Self"</h4>
+                    <p>O <strong>Self</strong> — ou a identidade individual subjetiva — não constitui um elemento estático ou biologicamente predeterminado. Trata-se de uma construção social contínua, moldada e reconfigurada permanentemente por meio das interações travadas em múltiplos espaços sociais simultâneos, passando pelas matrizes da família, da escola, dos grupos de amizade, do ambiente de trabalho e, contemporaneamente, pelas redes sociais digitais.</p>
+                </div>
+
+                <h2 class="section-title">Dinâmicas e Categorizações de Grupo</h2>
+                <p>As interações coletivas estruturam divisões de identidade e pertencimento que pautam os alinhamentos políticos internacionais:</p>
+                <ul>
+                    <li><strong>Endogrupo (In-group):</strong> O círculo social ou comunidade ao qual o indivíduo sente que pertence intimamente, desenvolvendo laços intensos de lealdade mútua, identidade compartilhada e forte sentimento de pertença.</li>
+                    <li><strong>Exogrupo (Out-group):</strong> Grupos percebidos pelo sujeito como externos, distintos ou antagônicos ("os outros"), capazes de despertar sentimentos de estranhamento cultural, rivalidade política, hostilidade ou indiferença.</li>
+                    <li><strong>Grupos de Referência:</strong> Indivíduos ou coletividades que operam como balizadores normativos de comportamento, ditando padrões de consumo, valores estéticos e morais para o sujeito que os toma como modelo inspirador (como atletas profissionais, celebridades e influenciadores digitais).</li>
+                </ul>
+            </div>
+
+            <!-- NÚCLEO 3: 🏢 MÓDULO 3: BUROCRACIA, ESTADO E A LÓGICA DO ELEITOR -->
+            <div id="burocracia-eleitor" class="tab-content">
+                <h2 class="section-title">A Teoria da Burocracia de Max Weber</h2>
+                <p>A burocracia constitui a organização administrativa pautada estritamente na racionalidade formal, atuando como o elemento técnico indispensável para a consolidação e o funcionamento do Estado Moderno. Sob o ponto de vista de seus **Pressupostos Econômicos**, a burocratização exige uma economia monetária estável e um sistema tributário previsível. Weber aponta que o antigo modelo de "arrendamento de impostos" gerava riscos crônicos de exploração excessiva e receitas inconstantes, sendo substituído historicamente pelo orçamento sistemático moderno.</p>
+                
+                <div class="concept-box">
+                    <h4>✦ Princípios Fundamentais da Administração Burocrática</h4>
+                    <ol>
+                        <li><strong>Hierarquia Funcional:</strong> Estrutura verticalizada de comando, autoridade e subordinação clara. Confere estabilidade jurídica no emprego e proteção contra demissões arbitrárias de cunho político (ponto positivo), mas pode gerar acomodação burocrática e travar a ascensão de novos talentos (ponto negativo).</li>
+                        <li><strong>Impessoalidade:</strong> Atuação pautada em regras escritas, leis impessoais e registros documentais permanentes. Exige a separação total entre o patrimônio público (o escritório/função) e o patrimônio privado (a residência/indivíduo).</li>
+                        <li><strong>Especialização e Profissionalização:</strong> Recrutamento de funcionários devidamente treinados, selecionados com base em competências técnicas e qualificações comprovadas por diplomas e exames públicos. São remunerados com salários fixos escalonados, transformando o cargo público em uma carreira desejada.</li>
+                        <li><strong>Controle e Publicidade:</strong> Atos administrativos regulamentados por rotinas que visam neutralizar a concessão de privilégios particulares ou exceções pessoais.</li>
+                    </ol>
+                </div>
+
+                <div class="quote-box">
+                    <strong>Vantagens vs. Efeitos Colaterais:</strong> Do ponto de vista técnico, a burocracia oferece precisão, rapidez decisória, continuidade documental e igualdade de tratamento normativo (padrão visto historicamente na organização dos exércitos prussianos ou na infraestrutura do Império Romano). Contudo, o seu excesso gera disfunções: lentidão processual, proliferação de papelada, tratamento desumanizado ("gaiola de ferro") e o conflito inevitável entre a frieza burocrática racional e as demandas passionais da opinião pública.
+                </div>
+
+                <h2 class="section-title">A Lógica Racional do Voto (Anthony Downs)</h2>
+                <p>Na teoria de Anthony Downs, o ato de votar é destituído de romantismo e analisado sob a ótica da **escolha racional**, onde o cidadão atua como um agente maximizador que busca obter o maior benefício pessoal possível, denominado **Renda de Utilidade**.</p>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>O Diferencial Partidário Esperado</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            O eleitor racional opera comparando de forma pragmática a utilidade real que recebeu do governo atual com a utilidade hipotética que estima que receberia caso o partido de oposição estivesse no comando do Estado:
+                            <br><br>
+                            • <strong>Resultado Positivo:</strong> O saldo favorece o governo atual &rarr; o eleitor vota na Situação (manutenção das políticas públicas).
+                            <br><br>
+                            • <strong>Resultado Negativo:</strong> O saldo desfavorece o governo atual &rarr; o eleitor vota na Oposição (desejo de alternância).
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Tendências, Abstenção e Marketing</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            • <strong>Projeções Temporais:</strong> Se o governo iniciou o mandato bem e piorou no final, o eleitor projeta um mau desempenho futuro e vota na oposição. Se começou mal e melhorou na reta final, projeta um bom desempenho e apoia a situação.
+                            <br><br>
+                            • <strong>Abstenção Racional:</strong> Ocorre quando o eleitor percebe que as plataformas políticas são idênticas ou que as mudanças partidárias não provocarão qualquer alteração na sua renda de utilidade individual, tornando o custo do voto maior que o benefício.
+                            <br><br>
+                            • <strong>O Papel do Marketing Político:</strong> Muitas utilidades públicas fundamentais (como saneamento básico ou pavimentação) não são notadas a curto prazo. Os governos utilizam a propaganda institucional para tornar esses benefícios conscientes e angariar apoio eleitoral.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NÚCLEO 4: 🇧🇷 MÓDULO 4: SOCIEDADE E POLÍTICA BRASILEIRA -->
+            <div id="sociedade-brasil" class="tab-content">
+                <h2 class="section-title">Sérgio Buarque de Holanda e as Raízes do Brasil</h2>
+                <p>Utilizando a metodologia dos **tipos ideais weberianos**, Sérgio Buarque de Holanda decifra as matrizes da formação nacional brasileira e as razões pelas quais o país se distanciou dos padrões de modernidade impessoal europeus.</p>
+                
+                <div class="concept-box">
+                    <h4>✦ A Anatomia do "Homem Cordial" e as Estruturas Ibéricas</h4>
+                    <ul>
+                        <li><strong>O Homem Cordial:</strong> Fruto do ambiente patriarcal, agrário e rural das grandes fazendas coloniais, onde os laços de consanguinidade e o poder absolutista do patriarca ditavam as regras sociais. O termo deriva do latim <em>cor, cordis</em> (coração). Não significa gentileza ou polidez; expressa o indivíduo que age guiado predominantemente pelo afeto, pela busca de intimidade e pelas emoções. O homem cordial fracassa em se submeter a regras abstratas, leis universais e ordenações impessoais, preferindo operar em redes de favoritismo e amizades pessoais.</li>
+                        <li><strong>Patrimonialismo e Personalismo:</strong> Representa a incapacidade cultural de distinguir a esfera pública do Estado da esfera privada do indivíduo. O governante patrimonial gere a máquina pública como se fosse uma extensão da sua própria residência, distribuindo cargos administrativos e benesses financeiras para familiares, aliados e clientelas políticas (nepotismo), colidindo frontalmente com a burocracia pura formal.</li>
+                        <li><strong>Trabalhador vs. Aventureiro:</strong> O <em>Trabalhador</em> foca no esforço contínuo, na disciplina e na construção paciente de longo prazo. O <em>Aventureiro</em> (herança da mentalidade ibérica de conquista) busca o ganho rápido, a audácia, o risco e a recompensa imediata sem o peso da rotina.</li>
+                        <li><strong>Semeador vs. Ladrilhador:</strong> O colonizador espanhol agiu como um <em>ladrilhador</em>, impondo cidades planejadas de forma racional com esquadro e linhas retas. O português operou como um <em>semeador</em>: colonizou ao acaso, espalhando vilas orgânicas que seguiam de forma fluida os contornos naturais da topografia.</li>
+                        <li><strong>Bacharelismo e Democracia de Fachada:</strong> Em uma terra que repudiava o trabalho braçal (visto como marca da escravidão), o diploma de Direito atuava como um selo aristocrático de distinção e oratória. A democracia brasileira nasceu como um "mal-entendido": uma estrutura formal importada da Europa e adaptada pelas elites locais para salvaguardar privilégios, onde a cidadania real foi sufocada pela cultura dos contatos pessoais. A perpetuação de dinastias políticas regionais no Brasil serve como prova empírica de como o personalismo familiar ainda sequestra as instituições estatais.</li>
+                    </ul>
+                </div>
+
+                <h2 class="section-title">As Transições Históricas do Estado Brasileiro</h2>
+                <p>A evolução político-administrativa do Brasil ao longo dos séculos XX e XXI estrutura-se em duas grandes linhas paralelas:</p>
+                
+                <h3>1. Evolução Política (O Estatuto do Poder)</h3>
+                <ul>
+                    <li><strong>Até 1930 (Estado Oligárquico):</strong> Política restrita de elites, estruturada para atender aos interesses econômicos dos barões da terra e das oligarquias agrárias.</li>
+                    <li><strong>1930 a 1945 / 1964 a 1985 (Estado Autoritário-Capitalista):</strong> Ciclos de forte centralização executiva do poder, repressão política e modernização econômica forçada pelo topo.</li>
+                    <li><strong>1946 a 1964 (Democracia de Elites):</strong> Intervalo democrático marcado por instabilidade institucional e baixa representatividade real das massas populares.</li>
+                    <li><strong>A partir de 1985 (Democracia de Sociedade Civil):</strong> Processo de redemocratização no qual a opinião pública, a mobilização popular e os movimentos sociais organizados passam a ter centralidade no processo decisório.</li>
+                </ul>
+
+                <h3>2. Evolução Administrativa (Modelos de Gestão Pública)</h3>
+                <ul>
+                    <li><strong>Até 1930 (Estado Patrimonial ou Patrimonial-Mercantil):</strong> Aliança estreita entre o estamento estatal burocrático e as elites rurais cafeeiras e agroexportadoras.</li>
+                    <li><strong>1930 a 1995 (Estado Burocrático ou Burocrático-Industrial):</strong> Consolidação da burocracia estatal (criação do DASP), sintonizada com a aliança entre a burguesia industrial nascente e a classe média profissional urbana.</li>
+                    <li><strong>A partir de 1995 (Estado Gerencial ou Gerencial-Pós-Industrial):</strong> Introdução da reforma gerencial do Estado. A estrutura migra em direção ao pós-industrial, onde o poder deriva progressivamente do controle do conhecimento técnico e organizacional, alterando a divisão clássica de classes por estratos sociais de saber.</li>
+                </ul>
+
+                <div class="concept-box">
+                    <h4>☕ Crise Econômica de 1930: O Declínio Cafeeiro</h4>
+                    <p>O <strong>Convênio de Taubaté (1906)</strong> instituiu a política de valorização artificial do café, na qual o governo comprava os excedentes de produção com empréstimos estrangeiros para manter as cotações internacionais elevadas. Como efeito colateral, a política estimulou a superprodução crônica e atraiu concorrentes globais. O colapso de 1930, catalisado pela quebra da Bolsa de Nova York em 1929, evidenciou a fragilidade do modelo agroexportador de monocultura. Os preços desabaram de 22,5 cents a libra-peso em 1929 para meros 8 cents em 1931, selando a perda de hegemonia e o fim do predomínio político da oligarquia cafeeira paulista.</p>
+                </div>
+            </div>
+
+            <!-- NÚCLEO 5: 📢 MÓDULO 5: POPULISMO, CIBERPOPULISMO E O FUTURO DIGITAL -->
+            <div id="populismo-trabalho" class="tab-content">
+                <h2 class="section-title">O Populismo Clássico e suas Tipologias</h2>
+                <p>Segundo a formulação conceitual de Norberto Bobbio, o **Populismo** configura-se como uma forma de governar baseada na liderança carismática que se direciona diretamente às massas populares, contornando as mediações institucionais e partidárias tradicionais. Apela estruturalmente para o moralismo e para um discurso emocional de ideologia rasa, fraturando o tecido social entre o "povo virtuoso" e o "não-povo" (composto pelas elites corrompidas ou agentes externos).</p>
+                
+                <p>Diferencia-se do socialismo científico por rejeitar a lógica materialista da luta de classes, preferindo promover a ideia de harmonia nacionalista interclassista. Suas condições de surgimento exigem: 1) o fenômeno da massificação decorrente da rápida urbanização; 2) a crise de representatividade das classes dominantes tradicionais; 3) a emergência de um líder carismático.</p>
+
+                <div class="table-responsive">
+                    <table class="minds-table">
+                        <thead>
+                            <tr>
+                                <th>Categoria de Populismo</th>
+                                <th>Movimentos e Líderes Históricos</th>
+                                <th>Dinâmica de Operação Política</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Nacional-populistas</strong></td>
+                                <td>Fascismo europeu, Nacional-Socialismo e o Peronismo na Argentina.</td>
+                                <td>Foco no nacionalismo exacerbado, corporativismo estatal e forte controle das massas urbanas.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Revolucionários / Militaristas</strong></td>
+                                <td>Nasserismo no Egito, Stalinismo na URSS e Castrismo em Cuba.</td>
+                                <td>Arregimentação total das massas populares em prol do fortalecimento do aparato militar e soberania do Estado.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Democráticos / Pluralistas</strong></td>
+                                <td>Sistemas históricos operados na Índia e em Israel.</td>
+                                <td>Uso do carisma de massas inserido e mediado por regras de competição eleitoral regulares.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Partidos Apristas</strong></td>
+                                <td>APRA no Peru, Ação Democrática na Venezuela.</td>
+                                <td>Alianças partidárias interclassistas de integração focadas em reformas sociais profundas.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title">O Neopopulismo Digital e o Ciberpopulismo</h2>
+                <p>Conceituado por Andrés Bruzzone, o <strong>Ciberpopulismo</strong> representa a fusão das estratégias de polarização populistas com a arquitetura algorítmica das plataformas digitais e mídias sociais. O ecossistema digital provoca um estado de ansiedade coletiva por meio do excesso informacional, e o discurso populista vende soluções simplistas, maniqueístas e autoritárias para sanar esse medo, asfixiando o debate crítico qualificado.</p>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Mecanismos: Desintermediação e Algoritmos</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            • <strong>Desintermediação Radical:</strong> O líder quebra os canais tradicionais de mediação institucional (como a imprensa profissional, os partidos políticos tradicionais e o conhecimento de cientistas) e comunica-se diretamente com as bases por meio de transmissões ao vivo e postagens orgânicas, forjando uma falsa sensação de intimidade comunitária e minando a confiança nos pilares democráticos.
+                            <br><br>
+                            • <strong>A Ditadura dos Algoritmos:</strong> As redes sociais buscam a monetização através da retenção contínua da atenção do usuário. Como conteúdos que despertam raiva, indignação moral e medo geram taxas de engajamento significativamente maiores, os algoritmos impulsionam postagens extremistas e isolam os cidadãos em bolhas ideológicas fechadas (endogrupos digitais), aniquilando a tolerância ao contraditório.
+                        </div>
+                    </div>
+
+                    <div class="exercise-card" onclick="toggleSolution(this)">
+                        <div class="card-header"><strong>Pós-Verdade e Inteligência de Dados</strong><div class="reveal-badge"></div></div>
+                        <div class="solution-box">
+                            • <strong>Pós-Verdade e Desinformação:</strong> Cenário político onde fatos objetivos têm menos peso na formação da opinião pública do que os apelos emocionais e as crenças pessoais. O objetivo central das campanhas de desinformação não é emplacar uma única mentira, mas saturar o ambiente informacional de dados contraditórios para induzir o cidadão ao cansaço cognitivo, tornando impossível a distinção entre o real e o simulado.
+                            <br><br>
+                            • <strong>O Poder dos Dados (Caso Cambridge Analytica):</strong> A pegada digital revela traços da psicologia profunda do usuário. Estudos demonstram que os algoritmos de microssegmentação psicométrica necessitam de apenas 10 curtidas para conhecer o perfil de alguém melhor que um colega de trabalho; 70 curtidas superam o conhecimento de um amigo próximo; 150 curtidas batem pais e irmãos; e com 300 curtidas a máquina prevê o voto do indivíduo com maior precisão que o seu próprio cônjuge, permitindo o direcionamento de propagandas customizadas invisíveis.
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Cultura, Alteridade e o Futuro do Trabalho</h2>
+                <p>Segundo Bronislaw Malinowski, a <strong>Cultura</strong> compreende a totalidade das criações humanas (tanto os artefatos tangíveis quanto as instituições intangíveis), englobando ferramentas, costumes, crenças morais, manifestações artísticas e a linguagem, transmitidos via herança social para sanar necessidades biológicas e sociais, estabelecendo os limites em que a ação social pode ocorrer. No campo das RI, o debate divide-se entre o **Etnocentrismo** (julgar a cultura alheia tomando a sua própria como padrão absoluto de superioridade, alimentando a xenofobia) e o **Relativismo Cultural** (premissa de que cada comportamento deve ser interpretado exclusivamente dentro do contexto e dos costumes de sua própria cultura).</p>
+                
+                <p>No debate pós-Guerra Fria sobre a existência de uma Cultura Global, a tese de Francis Fukuyama (<em>"O Fim da História"</em>) previa a homogeneização cultural e institucional do planeta sob a égide do capitalismo liberal. Em oposição direta, Samuel Huntington (<em>"O Choque das Civilizações"</em>) contrapôs argumentando que os conflitos contemporâneos seriam transculturais e pós-nacionais: a globalização comprime o espaço físico, mas acirra as fricções identitárias e as fraturas entre as grandes civilizações.</p>
+
+                <div class="concept-box">
+                    <h4>✦ O Futuro do Trabalho (Métricas do Fórum Econômico Mundial 2025/2026)</h4>
+                    <p>• <strong>A Transição Homem-Máquina:</strong> Estima-se que cerca de 65% dos alunos que hoje ingressam no ensino básico atuarão em profissões que na atualidade sequer foram inventadas. Os processos de automação inteligente e as tecnologias disruptivas (computação em nuvem, IA e big data) extinguirão cerca de 87 milhões de vagas operacionais e repetitivas, mas criarão em contrapartida 95 milhões de novos postos focados na sinergia técnica entre humanos, algoritmos e computadores.</p>
+                    <p>• <strong>Digitalização e Trabalho Remoto:</strong> Dados consolidados apontam que pelo menos 84% dos empregadores globais digitalizaram integralmente os seus processos de trabalho e estimam que 44% de toda a força laboral detém plenas condições de operar em regime de home office.</p>
+                    <p>• <strong>Habilidades de Sobrevivência Requeridas:</strong> O mercado de trabalho passa a exigir dos profissionais a <strong>Criatividade</strong> (capacidade de inovar e quebrar rotinas procedimentais) casada com a <strong>Resiliência e Tolerância ao Estresse</strong> (foco necessário para gerir as atividades intelectuais cotidianas), além de pensamento crítico analítico, inteligência emocional e alta flexibilidade cognitiva.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        REPOSITÓRIO ACADÊMICO PESSOAL &bull; MINDS GLOBE &bull; NÚCLEO DE CIÊNCIAS SOCIAIS &bull; 2026
+    </footer>
+
+    <script>
+        // Transição suave entre as Abas de Estudo com foco automático na aba ativa
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            const selectedBtn = event.currentTarget;
+            selectedBtn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+            selectedBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
+        // Script de inicialização automática e padronização dos badges de estudo ativo
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.exercise-card .reveal-badge').forEach(badge => {
+                badge.innerText = "VER DETALHES";
+            });
+        });
+
+        // Alternância uniforme e limpa dos cartões via JavaScript Puro
+        function toggleSolution(cardElement) {
+            const solutionBox = cardElement.querySelector('.solution-box');
+            solutionBox.classList.toggle('visible');
+            const badge = cardElement.querySelector('.reveal-badge');
+            if(solutionBox.classList.contains('visible')) {
+                badge.innerText = "FECHAR DETALHES";
+                badge.style.background = "#bfa175"; // Champagne ao abrir
+            } else {
+                badge.innerText = "VER DETALHES";
+                badge.style.background = "#162235"; // Azul-marinho ao fechar
+            }
+        }
+    </script>
+</body>
+</html>
